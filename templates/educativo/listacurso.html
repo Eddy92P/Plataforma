@@ -1,0 +1,43 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<div class="container" style="padding-top: 3%">
+   	<div class="card border-dark" style="padding-bottom: 10px;">
+      	<div class="card-header text-white text-center">
+         Lista de cursos
+      	</div>
+      	<table class="table table-borderless table-hover table-striped table-responsive-lg" id="lista_tabla">
+         	<thead>
+            	<tr>
+               	<th scope="col">#</th>
+               	<th scope="col">Curso</th>
+               	<th class="text-right" scope="col">Opciones</th>
+            	</tr>
+         </thead>
+         <tbody>
+         {% if object_list %}
+            {% for obj in object_list %}
+               <tr>
+                  <th scope="row">{{ obj.id }}</th>
+                  <td>{{ obj.nombre }}</td>
+                  <td>
+                     
+                     <div class="float-right">
+                        {% if perms.comunidad.view_docente %}
+                        <div class="btn-group" role="group">
+                           <a href="{% url 'educativo:listatema_d' obj.id %}" class="btn btn-info btn-sm"><i class="fa fa-list-alt"></i> Temas</a>
+                        </div>
+                        <div class="btn-group" role="group">
+                           <a href="{% url 'comunidad:listaestudiantes_curso' obj.id %}" class="btn btn-success btn-sm"><i class="fas fa-user-graduate"></i> Estudiantes</a>
+                        </div>
+                        {% endif %}
+                     </div>
+                  </td>
+               </tr>
+            {% endfor %}
+         {% endif %}
+         </tbody>
+      </table>
+   </div>
+</div>
+
+{% endblock body %}

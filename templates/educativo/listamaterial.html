@@ -1,0 +1,32 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<div class="container bootstrap snippet" style="padding-top: 3%">
+   	<div class="card border-dark" style="padding-bottom: 10px;">
+      	<div class="card-header text-white text-center">Tema "{{ tema }}" - Material educativo</div>
+      	<table class="table table-borderless table-hover table-striped" id="lista_tabla">
+         <thead>
+            <tr>
+               <th scope="col">#</th>
+               <th scope="col">Descripción</th>
+               <th style="text-align: center;" scope="col" width="250">Material</th>
+            </tr>
+         </thead>
+         <tbody>
+         {% if object_list %}
+            {% for obj in object_list %}
+               <tr>
+                  <th scope="row">{{ obj.id }}</th>
+                  <td>{{ obj.descripcion }}</td>
+                  <td style="text-align: center;" width="250">
+                     <a href="{{ obj.trabajo.url }}" download="">
+                        <img style="max-width: 15%;" title="Descargar" src="/static/fotos/pdf.png"></img>
+                     </a>
+                  </td>
+               </tr>
+            {% endfor %}
+         {% endif %}
+         </tbody>
+      </table>
+   </div>
+</div>
+	{% endblock body %}

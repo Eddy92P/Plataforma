@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es-la">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{% block blockname %}Plataforma Educativa{% endblock blockname %} </title>
+	<!-- css bosstrap -->
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link href="{% static 'css/nav.css' %}" rel="stylesheet"> 
+	<link href="{% static 'css/cssconf.css' %}" rel="stylesheet">
+	<link href="{% static 'fontawesome-free-5.13.0-web/css/all.css' %}" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+
+
+	<link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+
+	<script src="{% static 'js/ie-emulation-modes-warning.js' %}"></script>
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+
+    <script src="{% static 'js/html5shiv.min.js' %}"></script>
+    <script src="{% static 'js/respond.min.js' %}"></script>
+    
+
+	<script type="text/javascript" src="/static/autocomplete_light/jquery.init.js"></script>
+	<script type="text/javascript" src="/static/autocomplete_light/select2.full.js"></script>
+	<script type="text/javascript" src="/static/autocomplete_light/select2.js"></script>
+	<script src = "{% static 'formset/jquery.formset.js'%} "> </script>
+	<script type="text/javascript" src="/static/autocomplete_light/autocomplete.init.js"></script>
+	<script src="{% static 'js/jquery.auto-complete.js' %}"></script>
+	<script type="text/javascript" src="/static/autocomplete_light/autocomplete.js"></script>
+	
+	<script type="text/javascript" src="/static/autocomplete_light/forward.js"></script>
+	
+	
+
+	<script src="{% static 'js/es.js' %}"></script>
+	<link href="/static/autocomplete_light/select2.css" type="text/css" media="all" rel="stylesheet" />
+
+	<link href="{% static 'css/select2.min.css' %}" rel="stylesheet"></link>
+  
+  	<script src="{% static 'js/select2.min.js' %}"></script>
+
+  	<link href="{% static 'css/datatables.min.css' %}" rel="stylesheet">
+
+  	<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"></script>
+  	
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"></script>
+
+
+</head>
+<body>
+	{% block nav %}
+		{% include "base/nav.html" %}
+	{% endblock nav %}	
+	{% block foto %}
+		<div id="cn-overlay" class="cn-overlay"></div>
+	{% endblock foto %}
+	{% block body %}
+		
+	{% endblock body %}
+	{% block advertencia %}
+    	<script>
+			$(document).ready(function(){
+				$('#danger').on('submit', function(){
+					currentForm = this;
+					$('#dialog-confirm').dialog({
+						position: { my: "center", at: "center", of: window },
+						resizable: false,
+						modal: true,
+						draggable: false,
+						buttons: {
+							Guardar: function() 
+							{
+								currentForm.submit();
+							},
+							Cancelar: function() {
+								$(this).dialog('close');
+							}
+						},
+					});
+					return false;
+				});
+			});	
+		</script>
+        <div id="dialog-confirm" title="Cuidado!!!" style="display: none;">
+        	<div class="alert alert-info" role="alert">
+        		 <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+        		Está a punto de guardar la información, desea continuar?
+        	</div>
+		</div>
+
+    {% endblock advertencia %}
+    <!--<script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>-->
+
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+   
+    <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
+
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+
+    <script src="{% static 'js/selector-datatables.js' %}"></script>
+
+    <link href="{% static 'css/nav.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/card.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/comentario.css' %}" rel="stylesheet">
+
+
+    <script>window.jQuery || document.write('<script src="{% static 'js/jquery.min.js' %}"><\/script>')</script>
+	{% block footer %}
+	
+	{% endblock %}
+</body>
+
+</html>

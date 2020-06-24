@@ -1,0 +1,35 @@
+{% extends "base/index.html" %}
+
+{% block modal %}
+	
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h3 class="modal-title">Mensaje</h3>
+			<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
+			<button class="btn btn-primary" type="button" data-dismiss="modal">Confirmar</button>
+		</div>
+	</div>
+</div>	
+
+{% endblock modal %}
+<div class="modal fade" id="mensaje" role="dialog">
+		{% block modal %}
+
+		{% endblock modal %}
+</div>
+<script>
+	function abrir_modal_mensaje(url){
+		$('#mensaje').load(url, function (){
+			$(this).modal('show').
+		})
+	}
+</script>

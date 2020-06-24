@@ -1,0 +1,50 @@
+{% extends "base/index.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+	
+	<div class="container">
+	<div class="row justify-content-center align-items-center">
+	<div class="col-10 col-md-8 col-lg-6 card border-secondary text-white card-login">
+		
+			{% block legend %}
+				
+			{% endblock legend %}
+			{% block errores %}
+				
+			{% endblock errores %}
+
+			<h3 class="card-header text-center bg-transparent">
+			
+				{% block tituloform %}
+
+				{% endblock tituloform %}
+			
+			</h3>
+			<div class="card-body">
+			<form {% block iddanger %} {% endblock iddanger %} action="{% block urlEnvio %} {% endblock urlEnvio %}" method="post" enctype="multipart/form-data" class="form">
+				{% block formulario %}
+					
+				{% endblock formulario %}
+				
+			</form>
+			</div>
+	</div>
+	</div>
+	</div>
+
+	<div class="col-sm-4"></div>
+
+	{% block añadidos %}
+		
+	{% endblock añadidos %}
+
+	{% block footer %}
+	<footer>
+		<div>Desarrollado por Ing. Eddy Jhon Peñaranda Arispe</div>
+		<div></div>
+  		<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> Esta obra está bajo una <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">licencia de Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional</a>. <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a></div>
+	</footer>
+	{% endblock %}
+{% endblock body %}

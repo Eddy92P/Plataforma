@@ -1,0 +1,46 @@
+{% extends "base/index.html" %}	
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+{% block body %}
+<div class="container-fluid" style="padding-top: 1%">
+	<div class="row" style="padding-top: 10px">
+		{% if object_list %}
+			{% for obj in object_list %}
+			<div class="col-sm-4 py-2">
+				<div class="card border-dark card-materia">
+					<div class="card-header text-white">{{ curso_act|upper }} - {{ obj.nombre|upper }}</div>
+					{% if obj.imagen %}
+						<img src="{{ obj.imagen.url }}" class="card-img-top" alt="{{ obj.nombre }}">
+					{% else %}
+						<div class="img-card-container"><i class="fa fa-camera"></i></div>
+					{% endif %}
+					<div class="card-body">
+					{% if obj.docente_enc %}
+						{% doc_encargado obj curso_id as docente %}
+						{% for i in docente|slice:":1" %}
+							<p class="card-text">Prof. {{ i.user.first_name }} {{ i.user.last_name }}</p>
+						{% endfor %}
+					{% else %}
+						<p class="card-text">Profesor/a aún no designad@</p>
+					{% endif %}
+						<a href="{% url 'educativo:listatema' obj.id %}" class="btn btn-outline-info btn-sm"><i class="fa fa-file-alt"></i> Temas</a>
+					</div>
+					<div class="card-footer">
+						<small class="text-muted">Última actualización hace {{ obj.actualizacion_materia }}</small>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		{% else %}
+			<div class="col-sm-4 py-2">
+				<div class="card border-dark card-materia">
+					<div class="card-header text-white">Materias</div>
+					<div class="card-body">
+						<p class="card-text">No tiene materias asignadas.</p>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock body %}

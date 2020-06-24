@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark">
+	<a class="navbar-brand text-white">
+		<img src="/static/fotos/img6.jpg" width="30" height="30" class="img_nav d-inline-block align-top"> Plataforma Educativa
+	</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	 <span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+        		<a class="nav-link" href="/"><i class="fas fa-home"></i> Inicio</a>
+      		</li>
+			{% if perms.comunidad.add_user %}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-users"></i> Usuarios</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<h6 class="dropdown-header" style="color: #8D1900"><i class="fas fa-user-plus"></i> <b>Registro de usuarios</b></h6>
+						<a class="dropdown-item" href="{% url 'comunidad:nuevousuarioadmin' %}">Nuevo usuario administrativo</a>
+						<a class="dropdown-item" href="{% url 'comunidad:nuevousuariodocente' %}">Nuevo usuario docente</a>
+						<a class="dropdown-item" href="{% url 'comunidad:nuevousuariopadre' %}">Nuevo usuario padre de familia</a>
+						<a class="dropdown-item" href="{% url 'comunidad:nuevousuarioestudiante' %}">Nuevo usuario estudiante</a>
+						<div class="dropdown-divider"></div>
+						<h6 class="dropdown-header" style="color: #8D1900"><i class="far fa-list-alt"></i> <b>Listados</b></h6>
+						<a class="dropdown-item" href="{% url 'comunidad:listausuarioadmin' %}">Lista de administrativos</a>
+						<a class="dropdown-item" href="{% url 'comunidad:listausuariodocente' %}">Lista de docentes</a>
+						<a class="dropdown-item" href="{% url 'comunidad:listausuariopadre' %}">Lista de padres de familia</a>
+						<a class="dropdown-item" href="{% url 'comunidad:listausuarioestudiante' %}">Lista de estudiantes</a>
+					</div>
+				</li>
+			{% endif %}
+
+			{% if perms.comunidad.view_administrativo %}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-chalkboard"></i> Educativo</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<h6 class="dropdown-header" style="color: #8D1900"><i class="fas fa-plus"></i> <b>Registro de elementos educativos</b></h6>
+						<a class="dropdown-item" href="{% url 'educativo:nuevocurso' %}">Agregar curso</a>
+						<a class="dropdown-item" href="{% url 'educativo:nuevamateria' %}">Agregar materia</a>
+						<a class="dropdown-item" href="{% url 'educativo:nueva_actividad' %}">Agregar actividad</a>
+						<a class="dropdown-item" href="{% url 'educativo:estadopension' %}">Registrar estado de pensiones</a>
+						<h6 class="dropdown-header" style="color: #8D1900"><i class="far fa-list-alt"></i> <b>Listados</b></h6>
+						<a class="dropdown-item" href="{% url 'educativo:listacurso_admin' %}">Lista de cursos</a>
+						<a class="dropdown-item" href="{% url 'educativo:listamateria_admin' %}">Lista de materias</a>
+						<a class="dropdown-item" href="{% url 'educativo:lista_actividad' %}">Lista de actividades</a>
+						<h6 class="dropdown-header" style="color: #8D1900"><i class="far fa-address-book"></i> <b>Seguimiento</b></h6>
+						<a class="dropdown-item" href="{% url 'educativo:listaestado_docente' %}">Seguimiento docentes</a>
+						<a class="dropdown-item" href="{% url 'educativo:listaobservacion_admin' %}">Observaciones estudiantes</a>
+						<a class="dropdown-item" href="{% url 'educativo:listacomentario' %}">Comentarios</a>
+						<h6 class="dropdown-header" style="color: #8D1900"><i class="fas fa-user-tie"></i> <b>Administrativo</b></h6>
+						<a class="dropdown-item" href="{% url 'educativo:listapension' %}">Pensiones</a>
+					</div>
+				</li>
+			{% endif %}
+			{% if perms.comunidad.view_docente %}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-chalkboard-teacher"></i> Docentes</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<h6 class="dropdown-header" style="color: #8D1900"><i class="fas fa-chalkboard-teacher"></i> <b>Módulo de docentes</b></h6>
+						<a class="dropdown-item" href="{% url 'educativo:listacurso' %}">Mis cursos</a>
+						<a class="dropdown-item" href="{% url 'educativo:listaobservacion_docente' %}">Publicar observaciones de estudiantes</a>
+					</div>
+				</li>
+			{% endif %}
+			{% if perms.comunidad.view_padre %}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-friends"></i> Padres de familia</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<h6 class="dropdown-header" style="color: #8D1900"><i class="fas fa-user-friends"></i> <b>Módulo de padres de familia</b></h6>
+						<a class="dropdown-item" href="{% url 'educativo:listacomentario' %}">Publicar comentario</a>
+						<a class="dropdown-item" href="{% url 'educativo:listaobservacion' %}">Observaciones estudiantes</a>
+						<a class="dropdown-item" href="{% url 'educativo:listapension_padre' %}">Estado de pensiones</a>
+					</div>
+				</li>
+			{% endif %}
+			{% if perms.comunidad.view_estudiante %}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-graduate"></i> Estudiantes</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<h6 class="dropdown-header" style="color: #8D1900"><i class="fas fa-user-graduate"></i> <b>Módulo de estudiantes</b></h6>
+						<a class="dropdown-item" href="{% url 'educativo:listamateria' %}">Mis materias</a>
+					</div>
+				</li>
+			{% endif %}
+		</ul>
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<b>Bienvenid@!</b> {% if request.user.tipo_usuario == 2 %} Prof. {% endif %}{{ request.user.first_name }}
+				</a>
+				<div class="dropdown-menu dropdown-menu-right text-right">
+					<a class="dropdown-item" href="{% url 'comunidad:reset_password' %}">Cambiar Contraseña</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{% url 'comunidad:logout' %}">Salir</a>
+				</div>
+			</li>
+		</ul>
+		</div>
+	</div>
+</nav>

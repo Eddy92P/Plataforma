@@ -1,0 +1,33 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<main>
+	<div class="container-comments">
+   		{% if object_list %}
+   			{% for obj in object_list %}
+    			<div class="card border-dark card-materia" style="margin-top: 2%;">
+    			   	<div class="card-header text-white"><i class="fas fa-user"></i> <span>Estudiante {{ obj.estudiante.user.first_name }} {{ obj.estudiante.user.last_name }}</</span><span class="float-right">{{ obj.fecha }}</span></div>
+    			   	<div class="card-body">
+    			   		<p class="card-text"><b>{{ obj.get_razon_display }}</b></p>
+    			   		<ul class="list-group">
+    						<li class="list-group-item">{{ obj.descripcion }}</li>
+  						</ul>
+    			   	</div>
+                    <div class="card-footer">
+                        <small class="text-muted">Prof. {{ obj.docente }}</small>
+                    </div>
+    			</div>
+    		{% endfor %}
+    	{% else %}
+    		<div class="card border-dark card-materia">
+    		   	<div class="card-header text-white">Observaciones</div>
+    		   	<div class="card-body">
+    		      	<p class="card-text">No existen observaciones aún</p>
+    		   	</div>
+    		   	<div class="card-footer">
+    		      	<small class="text-muted"></small>
+    		   	</div>
+    		</div>
+    	{% endif %}
+	</div>
+</main>
+{% endblock body %}

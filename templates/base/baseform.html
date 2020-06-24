@@ -1,0 +1,41 @@
+{% extends "base/index.html" %}
+
+{% block body %}
+	
+	<div class="container" style="padding-top: 1%">
+	<div class="row justify-content-center align-items-center">
+	<div class="col-10 col-md-8 col-lg-6 card border-secondary">
+		
+			{% block legend %}
+				
+			{% endblock legend %}
+			{% block errores %}
+				
+			{% endblock errores %}
+
+			<h4 class="card-header text-white">
+			
+				{% block tituloform %}
+
+				{% endblock tituloform %}
+			
+			</h4>
+			<div class="card-body">
+			<form {% block iddanger %} {% endblock iddanger %} action="{% block urlEnvio %} {% endblock urlEnvio %}" method="post" enctype="multipart/form-data" class="form">
+				{% block formulario %}
+					
+				{% endblock formulario %}
+				
+			</form>
+			</div>
+	</div>
+	</div>
+	</div>
+
+	<div class="col-sm-4"></div>
+
+	{% block añadidos %}
+		
+	{% endblock añadidos %}
+
+{% endblock body %}

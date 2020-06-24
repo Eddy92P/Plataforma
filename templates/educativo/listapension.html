@@ -1,0 +1,49 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<div class="container" style="padding-top: 3%">
+   	<div class="card border-dark" style="padding-bottom: 10px;">
+      	<div class="card-header text-white text-center">
+         	Pensiones
+      	</div>
+      	<table class="table table-borderless table-hover table-striped table-responsive-lg" id="lista_tabla">
+         	<thead>
+            	<tr>
+               		<th scope="col">#</th>
+               		<th scope="col">Padre de familia</th>
+               		<th scope="col">Estudiante</th>
+               		<th scope="col">Número de pensión</th>
+               		<th scope="col">Estado</th>
+               		<th class="text-right" scope="col">Opciones</th>
+            	</tr>
+         </thead>
+         <tbody>
+         {% if object_list %}
+            {% for obj in object_list %}
+               <tr>
+                  <th scope="row">{{ obj.id }}</th>
+                  <td>{{ obj.estudiante.padre }}</td>
+                  <td>{{ obj.estudiante }}</td>
+                  <td>{{ obj.numero_pension }}</td>
+                  {% if obj.estado == True %}
+                  	<td>Pendiente</td>
+                  {% else %}
+                  	<td>Cancelado</td>
+                  {% endif %}
+                  <td>
+                     {% if perms.comunidad.view_administrativo %}
+                     <div class="float-right">
+                        <div class="btn-group" role="group">
+                           <a href="{% url 'educativo:updatecurso' obj.id %}" type="button" class="btn btn-primary btn-sm" title="Editar"><i class="fas fa-edit"></i> Editar</a> 
+                        </div>
+                     </div>
+                     {% endif %}
+                  </td>
+               </tr>
+            {% endfor %}
+         {% endif %}
+         </tbody>
+      </table>
+   </div>
+</div>
+
+{% endblock body %}

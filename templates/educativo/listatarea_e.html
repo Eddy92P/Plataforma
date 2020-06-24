@@ -1,0 +1,75 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<div class="container bootstrap snippet" style="padding-top: 3%">
+   <div class="card border-dark" style="padding-bottom: 10px;">
+      <div class="card-header text-white text-center">Tema "{{ tema }}" - Tareas</div>
+      <table class="table table-borderless table-hover table-striped" id="lista_tabla">
+         <thead>
+            <tr>
+               <th scope="col">#</th>
+               <th scope="col">Nombre de la tarea</th>
+               <th style="text-align: center;" scope="col" width="250">Guía para descargar</th>
+               <th scope="col">Opciones</th>
+            </tr>
+         </thead>
+         <tbody>
+         {% if object_list %}
+            {% for obj in object_list %}
+               <tr>
+                  <th scope="row">{{ obj.id }}</th>
+                  <td>{{ obj.nombre }}</td>
+                  <td style="text-align: center;" width="250">
+                     <a href="{{ obj.trabajo.url }}" download="">
+                        <img style="max-width: 15%;" title="Descargar" src="/static/fotos/pdf.png"></img>
+                     </a>
+                  </td>
+                  <td>
+                     {% if perms.comunidad.view_estudiante %}
+                        <div class="btn-group" role="group">
+                           <a href="{% url 'educativo:detalletarea' obj.id %}" type="button" class="btn btn-info btn-sm" title="Detalles">
+                              <i class="fa fa-list-alt"></i> Entregar tarea
+                           </a>     
+                        </div>
+                     {% endif %}
+                  </td>
+               </tr>
+            {% endfor %}
+         {% endif %}
+         </tbody>
+      </table>
+   </div>
+</div>	
+  	<!-- paginador -->
+  	{% if is_paginated %}
+		<nav aria-label="">
+  			<ul class="pagination justify-content-end">
+  			{% if page_obj.has_previous %}
+  				<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="sr-only"></span></a></li>
+  			{% else %}
+  				<li class="page-item disabled"><span class="page-link"><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+  			{% endif %}
+
+  			{% if page_obj.number|add:'-4' > 1 %}
+  				<li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+  			{% endif %}
+  			{% for i in page_obj.paginator.page_range %}
+    			{% if page_obj.number == i %}
+    				<li class="page-item active"><span class="page-link">{{ i }}</span></li>
+    			{% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+    				<li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+    			{% endif %}
+    		{% endfor %}
+    		{% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+    			<li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+			{% endif %}
+			{% if page_obj.has_next %}
+    			<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+			{% else %}
+    			<li class="page-item disabled"><span class="page-link"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+			{% endif %}
+  			</ul>
+		</nav>
+	{% endif %}
+	<!-- paginador -->
+
+{% endblock body %}

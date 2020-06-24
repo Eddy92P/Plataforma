@@ -1,0 +1,57 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<div class="container bootstrap snippet" style="padding-top: 3%">
+	 <div class="card border-dark" style="padding-bottom: 10px;">
+			<div class="card-header text-white text-center">Tarea "{{ tarea }}" - Tareas entregadas por los estudiantes</div>
+			<table class="table table-borderless table-hover table-striped" id="lista_tabla">
+				 <thead>
+						<tr>
+							 <th scope="col">#</th>
+							 <th scope="col">Estudiante</th>
+							 <th scope="col">Fecha de entrega</th>
+							 <th scope="col">Estado</th>
+							 <th scope="col">Trabajo</th>
+							 <th scope="col">Opciones</th>
+						</tr>
+				 </thead>
+				 <tbody>
+				 {% if object_list %}
+						{% for obj in object_list %}
+							 <tr>
+									<th scope="row">{{ obj.id }}</th>
+									<td>{{ obj.estudiante }}</td>
+									<td>
+									{% if obj.fecha_entrega %}
+										{{ obj.fecha_entrega }}
+									{% endif %}
+									</td>
+									<td>
+										{% if obj.entregado %}
+											Entregado
+										{% else %}
+											No entregado
+										{% endif %}
+									</td>
+									<td>
+										{% if obj.trabajo %}
+										 	<a href="{{ obj.trabajo.url }}">{{ obj.filename }}</a>
+										{% endif %}
+									</td>
+									<td>
+										{% if perms.comunidad.view_docente %}
+											<div class="btn-group" role="group">
+												<a href="{% url 'educativo:nuevaobservacion_data' obj.id %}" type="button" class="btn btn-info btn-sm" title="Detalles">
+													<i class="far fa-comment-dots"></i> Realizar observación
+												</a>     
+											</div>
+										{% endif %}
+									</td>
+							 </tr>
+						{% endfor %}
+				 {% endif %}
+				 </tbody>
+			</table>
+	 </div>
+</div>
+
+{% endblock body %}

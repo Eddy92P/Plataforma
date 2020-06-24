@@ -1,0 +1,30 @@
+{% extends "base/index.html" %}  
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="container-fluid" style="padding-top: 1%">
+   <div class="card border-dark">
+      <div class="card-header text-white text-center"><h6>{{ materia|title }} - Lista de temas</h6></div>
+   </div>
+   <div class="row" style="padding-top: 10px">
+      {% if object_list %}
+         {% for obj in object_list %}
+         <div class="col-sm-4 py-2">
+            <div class="card border-dark card-materia">
+               <div class="card-header text-white">Tema Nº {{ obj.id }} "{{ obj.nombre }}"</div>
+               <div class="card-body">
+                  <p class="card-text">{{ obj.contenido }}</p>
+                  {% if perms.comunidad.view_estudiante %}
+                     <a href="{% url 'educativo:listatarea_e' obj.id %}" class="btn btn-outline-info btn-sm"><i class="fa fa-file-alt"></i> Tareas</a>
+                     <a href="{% url 'educativo:listamaterial' obj.id %}" class="btn btn-outline-info btn-sm"><i class="fa fa-file-alt"></i> Material educativo</a>
+                  {% endif %}
+               </div>
+               <div class="card-footer">
+                  <small class="text-muted">Fecha de inicio {{ obj.fecha_inicio }}</small>
+               </div>
+            </div>
+         </div>
+         {% endfor %}
+      {% endif %}
+   </div>
+</div>
+{% endblock body %}	

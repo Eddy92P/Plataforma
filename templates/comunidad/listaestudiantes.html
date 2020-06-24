@@ -1,0 +1,54 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<div class="container-fluid" style="padding-top: 3%">
+	<div class="card border-dark" style="padding-bottom: 10px;">
+		<div class="card-header text-white text-center">
+		 	Lista de usuarios estudiantes
+		</div>
+		<table class="table table-borderless table-hover table-striped table-responsive-lg" id="lista_tabla">
+			<thead>
+				<tr>
+					<th scope="col">Nombres</th>
+					<th scope="col">Apellidos</th>
+					<th scope="col">Padre o tutor</th>
+					<th scope="col">Curso</th>
+               		<th scope="col">Correo electrónico</th>
+					<th scope="col">C.I.</th>
+					<th scope="col">Celular</th>
+					<th scope="col">Opciones</th>
+				</tr>
+		 </thead>
+		 <tbody>
+		 {% if object_list %}
+			{% for obj in object_list %}
+			   <tr>
+				  	<td>{{ obj.user.first_name }}</td>
+				  	<td>{{ obj.user.last_name }}</td>
+				  	<td>{{ obj.padre }}</td>
+				  	<td>{{ obj.curso }}</td>
+				  	<td>{{ obj.user.email }}</td>
+				  	<td>{{ obj.ci }}</td>
+				  	<td>{{ obj.telefono_celular }}</td>
+				  	<td>
+						<div class="float-right">
+							{% if perms.comunidad.view_administrativo %}
+							<div class="dropdown">
+  								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    								Gestión de usuario
+  								</button>
+  								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    								<a class="dropdown-item " href="{% url 'comunidad:updateusuarioestudiante' obj.user_id %}"><i class="fas fa-edit"></i> Editar</a>
+    								<a class="dropdown-item " href="{% url 'comunidad:updatedarbajaestudiante' obj.user_id %}"><i class="fas fa-ban"></i> Dar de baja</a>
+    							</div>
+    						</div>
+							{% endif %}
+						</div>
+				 	</td>
+			   </tr>
+			{% endfor %}
+		 {% endif %}
+		 </tbody>
+	  </table>
+   </div>
+</div>
+{% endblock body %}

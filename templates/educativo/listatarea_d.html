@@ -1,0 +1,54 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<div class="container" style="padding-top: 3%">
+   <div class="card border-dark" style="padding-bottom: 10px;">
+      <div class="card-header text-white text-center">
+         Tema "{{ tema|title }}" - Tareas (Docente)
+         {% if request.user.tipo_usuario == 2 %}
+            <a href="{% url 'educativo:nuevatarea' pk1 %}" type="button" class="btn btn-primary btn-sm float-right" title="Agregar tarea"><i class="fas fa-plus-circle"></i> Agregar</a>
+         {% endif %}
+      </div>
+      <table class="table table-borderless table-hover table-striped table-responsive-lg" id="lista_tabla">
+         <thead>
+            <tr>
+               <th scope="col">#</th>
+               <th scope="col">Nombre</th>
+               <th scope="col">Fecha de subida</th>
+               <th scope="col">Fecha plazo</th>
+               <th scope="col">Trabajo</th>
+               <th scope="col">Opciones</th>
+            </tr>
+         </thead>
+         <tbody>
+         {% if object_list %}
+            {% for obj in object_list %}
+               <tr>
+                  <th scope="row">{{ obj.id }}</th>
+                  <td>{{ obj.nombre }}</td>
+                  <td>{{ obj.fecha_habilitado }}</td>
+                  <td>{{ obj.fecha_plazo }}</td>
+                  <td><a href="{{ obj.trabajo.url }}">{{ obj.filename }}</a></td>
+                  <td>
+                     {% if perms.comunidad.view_docente %}
+                        {% if request.user.tipo_usuario == 2 %}
+                           <div class="btn-group" role="group">
+                              <a href="{% url 'educativo:updatetarea' obj.id %}" type="button" class="btn btn-primary btn-sm" title="Editar">
+                                 <i class="fas fa-edit"></i> Editar
+                              </a>
+                           </div>
+                        {% endif %}
+                        <div class="btn-group" role="group">
+                           <a href="{% url 'educativo:listatareas_entregadas' obj.id %}" type="button" class="btn btn-info btn-sm" title="Editar">
+                              <i class="fa fa-file-alt"></i> Tareas estudiantes
+                           </a>
+                        </div>
+                     {% endif %}
+                  </td>
+               </tr>
+            {% endfor %}
+         {% endif %}
+         </tbody>
+      </table>
+   </div>
+</div>
+{% endblock body %}

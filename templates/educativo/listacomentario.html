@@ -1,0 +1,33 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<main>
+	<div class="container-comments">
+   		{% if object_list %}
+   			{% for obj in object_list %}
+    			<div class="card border-dark card-materia" style="margin-top: 2%;">
+    			   	<div class="card-header text-white"><i class="fas fa-user"></i> <span>{{ obj.usuario.first_name }}</span><span class="float-right">{{ obj.fecha }}</span></div>
+    			   	<div class="card-body">
+    			   		<p class="card-text"><b>{{ obj.get_razon_display }}</b></p>
+    			   		<ul class="list-group">
+    						<li class="list-group-item">{{ obj.descripcion }}</li>
+  						</ul>
+    			   	</div>
+    			</div>
+    		{% endfor %}
+    		<div class="btn-group float-right" style="padding-top: 5px;" role="group">
+                <a href="{% url 'educativo:nuevocomentario' %}" class="btn btn-info"><i class="far fa-comment-dots"></i> Comentar</a>
+            </div>
+    	{% else %}
+    		<div class="card border-dark card-materia">
+    		   	<div class="card-header text-white">Comentarios</div>
+    		   	<div class="card-body">
+    		      	<p class="card-text">No existen comentarios aún</p>
+    		   	</div>
+    		   	<div class="card-footer">
+    		      	<small class="text-muted"></small>
+    		   	</div>
+    		</div>
+    	{% endif %}
+	</div>
+</main>
+{% endblock body %}

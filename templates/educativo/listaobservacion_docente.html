@@ -1,0 +1,54 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<div class="container" style="padding-top: 3%">
+   	<div class="card border-dark" style="padding-bottom: 10px;">
+      	<div class="card-header text-white text-center">
+            Observaciones
+            {% if request.user.tipo_usuario == 2 %}
+               <a href="{% url 'educativo:nuevaobservacion' %}" type="button" class="btn btn-primary btn-sm float-right" title="Agregar tema"><i class="fas fa-plus-circle"></i> Agregar</a>
+            {% endif %}
+      	</div>
+      	<table class="table table-borderless table-hover table-striped table-responsive-lg" id="lista_tabla">
+         	<thead>
+            	<tr>
+               	<th scope="col">#</th>
+                  <th scope="col">Docente</th>
+               	<th scope="col">Curso</th>
+                  <th scope="col">Materia</th>
+                  <th scope="col">Estudiante</th>
+                  <th scope="col">Razón</th>
+                  <th scope="col">Descripción</th>
+               	<th class="text-right" scope="col">Opciones</th>
+            	</tr>
+         </thead>
+         <tbody>
+         {% if object_list %}
+            {% for obj in object_list %}
+               <tr>
+                  <th scope="row">{{ obj.id }}</th>
+                  <td>{{ obj.docente }}</td>
+                  <td>{{ obj.curso }}</td>
+                  <td>{{ obj.materia }}</td>
+                  <td>{{ obj.estudiante }}</td>
+                  <td>{{ obj.get_razon_display }}</td>
+                  <td>{{ obj.descripcion }}</td>
+                  <td>
+                     {% if perms.comunidad.view_docente %}
+                     <div class="float-right">
+                        {% if request.user.tipo_usuario == 2 %}
+                        <div class="btn-group" role="group">
+                           <a href="{% url 'educativo:updateobservacion' obj.id %}" type="button" class="btn btn-primary btn-sm" title="Editar"><i class="fas fa-edit"></i> Editar</a> 
+                        </div>
+                        {% endif %}
+                     </div>
+                     {% endif %}
+                  </td>
+               </tr>
+            {% endfor %}
+         {% endif %}
+         </tbody>
+      </table>
+   </div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,57 @@
+{% extends "base/baseform_login.html" %}
+	
+	{% block nav %}
+		
+	{% endblock nav %}
+	
+	{% block tituloform %}
+		Login
+	{% endblock tituloform %}
+			
+	{% block errores %}
+		{% if form.errors %}
+				<p>Tu nombre de usuario o password no se a encontrado. Intente de nuevo</p>
+		{% endif %}
+
+		{% if next %}
+			{% if user.is_authenticated %}
+			    <p>Tu cuenta no tiene acceso a esta página. Para continuar,
+			    logeese con una cuenta que cuente con los permisos necesarios.</p>
+			{% else %}
+			    <p>Por favor Logeate para ver esta página.</p>
+			{% endif %}
+		{% endif %}	
+	{% endblock errores %}		
+			
+	{% block urlEnvio %}
+		{% url 'comunidad:login' %}
+	{% endblock urlEnvio %}	    
+			
+	{% block formulario %}
+		<form>
+			{% csrf_token %}
+			<img src="/static/fotos/avatar.png" class="avatar">
+			<div class="form-group">
+				    <label for="username" class="control-label">Usuario</label>
+				    <div class="col-lg-12">
+				      <input type="text" class="form-control" placeholder="Usuario" name="username">
+				    </div>
+				  </div>
+
+			<div class="form-group">
+				    <label for="password" class="control-label">Contraseña</label>
+				    <div class="col-lg-12">
+				      <input type="password" class="form-control" placeholder="Contraseña" name="password">
+				    </div>
+				  </div>
+
+			<input type="hidden" name="next" value="{{ next }}" />
+
+				<input type="submit" class="logbtn" value="Login">
+					
+				<div class="row justify-content-center align-items-center div-forgot" >
+					<a href="{% url 'comunidad:reset_password' %}">Perdió su contraseña?</a>
+				</div>
+		</form>	
+	{% endblock formulario %}		
+			

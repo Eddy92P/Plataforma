@@ -1,0 +1,66 @@
+{% extends "base/index.html" %}  
+{% block body %}
+{% load custom_tags %}
+<div class="container-fluid" style="padding-top: 1%;">
+   <div>
+      <form class="form-inline d-flex flex-row-reverse" action="" method="get" accept-charset="utf-8" style="background-color: white; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; padding-right:10px; border-style: ridge; border-color: gray;">
+         <button type="submit" class="btn-secondary form-control" style="margin-top: 1%"><i class="fas fa-search"></i> Buscar</button>
+         <div class="form-row">
+            {% load bootstrap4 %}
+                        
+            {% bootstrap_form form %}
+         </div>
+         {% if f1 and f2 %}
+            <div class="col-sm-8 mb-2">
+               Resultados mostrados del <b>{{ fecha1 }}</b> al <b>{{ fecha2 }}</b>
+            </div>
+         {% endif %}
+      </form>
+      
+   </div>
+   <div class="row" style="padding-top: 10px">
+      {% if object_list %}
+         {% for obj in object_list %}
+         <div class="col-sm-5 py-2">
+            <div class="card border-dark card-materia">
+               <div class="card-header text-white"><i class="fas fa-chalkboard-teacher"></i> Prof. {{ obj.user.first_name }} {{ obj.user.last_name }}</div>
+               <div class="card-body">
+                  <ul class="list-group list-group-flush">
+                     {% if f1 and f2 %}
+                        {% for materia in obj.materia.all %}
+                           <p class="card-text item1-head"><b>Materia que dicta</b></p>
+                           <li class="list-group-item">- {{ materia.nombre|title }}</li>
+                           {% tema materia f1 f2 as temas %}
+                           {% for tema in temas %}
+                              <p class="card-text item2-head" style="padding-top: 10px;"><b>Tema de la materia</b></p>
+                              <li class="list-group-item item2">- "{{ tema.nombre|title }}" empezó el {{ tema.fecha_inicio }}</li>
+                              {% tarea tema f1 f2 as tareas %}
+                              {% for tarea in tareas %}
+                                 <p class="card-text item3-head" style="padding-top: 10px;"><b>Tareas del tema</b></p>
+                                 <li class="list-group-item item3">- "{{ tarea.nombre|title }}" se publicó el {{ tarea.fecha_habilitado }}</li>
+                              {% endfor %}
+                           {% endfor %}
+                        {% endfor %}
+                     {% endif %}
+                  </ul>
+               </div>
+               <div class="card-footer">
+                  <small class="text-muted">Fecha de ingreso del docente {{ obj.fecha_ingreso }}</small>
+               </div>
+            </div>
+         </div>
+         {% endfor %}
+   </div>
+      {% else %}
+         <div class="card border-dark card-materia">
+            <div class="card-header text-white">Docentes</div>
+            <div class="card-body">
+               <p class="card-text">No existen docentes aún</p>
+            </div>
+            <div class="card-footer">
+               <small class="text-muted"></small>
+            </div>
+         </div>
+      {% endif %}
+</div>
+{% endblock body %}
