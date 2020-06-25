@@ -36,7 +36,7 @@ class crearActividadForm(ModelForm):
 	class Meta:
 		model = Actividad
 		exclude = ['']
-		widgets = {'fecha':Html5DateInput(format='%Y-%m-%d', attrs={'class':'form-control'})}
+		widgets = {'fecha_inicio':Html5DateInput(format='%Y-%m-%d', attrs={'class':'form-control'}), 'fecha_fin':Html5DateInput(format='%Y-%m-%d', attrs={'class':'form-control'})}
 		labels = {
 			'ubicacion' : 'Ubicación',
 			'descripcion' : 'Descripción'

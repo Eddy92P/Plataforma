@@ -550,3 +550,12 @@ class listaEstadoDocente(CreateView, ListView):
 		else:
 			object_list = self.model.objects.all().order_by('user__first_name')
 		return object_list
+
+class calendario_actividad(ListView):
+	model = Actividad
+	template_name = "educativo/calendario.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['actividad'] = Actividad.objects.all()
+		return context

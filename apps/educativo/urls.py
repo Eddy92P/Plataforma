@@ -71,6 +71,10 @@ urlpatterns = [
         permission_required('auth.view_educativo')(login_required(csrf_exempt(listaActividad.as_view()))), 
         name='lista_actividad'
     ),
+    path('calendario/', 
+        permission_required('auth.view_educativo')(login_required(csrf_exempt(calendario_actividad.as_view()))), 
+        name='calendario'
+    ),
     re_path(r'^nuevotema/(?P<pk>\d+)/$',
         permission_required('comunidad.view_docente')(login_required(crearTema.as_view())), 
         name='nuevotema'

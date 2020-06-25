@@ -1,0 +1,48 @@
+{% extends "base/index.html" %}	
+
+{% block body %}
+<div class="container" style="padding-top: 1%">
+	<div class="row justify-content-center align-items-center">
+		<div class="col-10 col-md-8 col-lg-12 card border-secondary">
+			<h4 class="card-header text-white">
+				Calendario Académico
+			</h4>
+		</div>
+		<div class="col-10 col-md-8 col-lg-12 card border-secondary">
+			<div id='calendar'></div>
+			<script>
+				$('#calendar').fullCalendar({
+					lang: 'es',
+					header: {
+						left: 'prev,next today',
+						center: 'title',
+						right: 'month,basicWeek,basicDay'
+					},
+					navLinks: true, // can click day/week names to navigate views
+					editable: true,
+					eventLimit: true, // allow "more" link when too many events
+					events: [
+						{% for a in actividad %}
+							{
+								title: '{{ a.nombre }}',
+								start: '{{ a.fecha_inicio|date:"Y-m-d" }}',
+								end: '{{ a.fecha_fin|date:"Y-m-d" }}',
+								description:'{{ a.descripcion }}',
+							},
+						{% endfor %}
+							
+					],
+					eventRender: function(event, element) { 
+      					element.find('.fc-title').append("<br/>" + event.description); 
+     				}						
+				});
+			</script>
+		</div>
+	</div>
+<div class="col-sm-3"></div>
+		
+{% endblock body %}
+
+
+
+				

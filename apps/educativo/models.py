@@ -165,10 +165,15 @@ class Actividad(models.Model):
 		blank=False,
 		help_text="Descripción de la actividad",
 		)
-	fecha = models.DateField(
+	fecha_inicio = models.DateField(
 		null=False,
 		blank=False,
-		help_text="Fecha en que se realizará la actividad."
+		help_text="Fecha en que iniciara la actividad."
+		)
+	fecha_fin = models.DateField(
+		null=False,
+		blank=False,
+		help_text="Fecha en que finalizará la actividad."
 		)
 
 	class Meta:
