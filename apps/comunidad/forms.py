@@ -16,13 +16,12 @@ class crearUsuarioUserAForm(UserCreationForm):
 		User = get_user_model()
 		model = User
 		fields =[
-			'username',
 			'first_name',
 			'last_name',
-			'email'
+			'email',
 		]
 		labels = {
-			'first_name' : 'Nombre/s'
+			'first_name' : 'Nombres'
 		}
 		widgets ={
 			'username':forms.TextInput(attrs={'class': 'form-control'}),
@@ -35,13 +34,10 @@ class crearUsuarioUserAForm(UserCreationForm):
 		self.fields['email'].required = True
 		self.fields['first_name'].required = True
 		self.fields['last_name'].required = True
-
-	def save(self, commit=True):
-		user = super().save(commit=False)
-		user.tipo_usuario = 1
-		if commit:
-			user.save()
-		return user
+		self.fields['password1'].required = False
+		self.fields['password2'].required = False
+		self.fields['password1'].widget = forms.HiddenInput()
+		self.fields['password2'].widget = forms.HiddenInput()
 
 class crearKardexAdministrativoForm(ModelForm):
 	class Meta:
@@ -64,19 +60,34 @@ class crearKardexAdministrativoForm(ModelForm):
 			'puesto':'Puesto de trabajo'
 		}
 
-class crearUsuarioUserBForm(crearUsuarioUserAForm):
+class crearUsuarioUserBForm(UserCreationForm):
+	class Meta:
+		User = get_user_model()
+		model = User
+		fields =[
+			'first_name',
+			'last_name',
+			'email',
+		]
+		labels = {
+			'first_name' : 'Nombres'
+		}
+		widgets ={
+			'username':forms.TextInput(attrs={'class': 'form-control'}),
+			'first_name':forms.TextInput(attrs={'class': 'form-control'}),
+			'last_name':forms.TextInput(attrs={'class': 'form-control'}),
+			'email':forms.EmailInput(attrs={'class': 'form-control'}),
+		}
+
 	def __init__(self, *args, **kwargs):
 		super(crearUsuarioUserBForm, self).__init__(*args, **kwargs)
 		self.fields['email'].required = True
 		self.fields['first_name'].required = True
 		self.fields['last_name'].required = True
-
-	def save(self, commit=True):
-		user = super().save(commit=False)
-		user.tipo_usuario = 2
-		if commit:
-			user.save()
-		return user
+		self.fields['password1'].required = False
+		self.fields['password2'].required = False
+		self.fields['password1'].widget = forms.HiddenInput()
+		self.fields['password2'].widget = forms.HiddenInput()
 
 class crearKardexDocenteForm(ModelForm):
 	class Meta:
@@ -100,19 +111,34 @@ class crearKardexDocenteForm(ModelForm):
 			'curso':'Curso/s'
 		}
 
-class crearUsuarioUserCForm(crearUsuarioUserAForm):
+class crearUsuarioUserCForm(UserCreationForm):
+	class Meta:
+		User = get_user_model()
+		model = User
+		fields =[
+			'first_name',
+			'last_name',
+			'email',
+		]
+		labels = {
+			'first_name' : 'Nombres'
+		}
+		widgets ={
+			'username':forms.TextInput(attrs={'class': 'form-control'}),
+			'first_name':forms.TextInput(attrs={'class': 'form-control'}),
+			'last_name':forms.TextInput(attrs={'class': 'form-control'}),
+			'email':forms.EmailInput(attrs={'class': 'form-control'}),
+		}
+
 	def __init__(self, *args, **kwargs):
 		super(crearUsuarioUserCForm, self).__init__(*args, **kwargs)
 		self.fields['email'].required = True
 		self.fields['first_name'].required = True
 		self.fields['last_name'].required = True
-
-	def save(self, commit=True):
-		user = super().save(commit=False)
-		user.tipo_usuario = 3
-		if commit:
-			user.save()
-		return user
+		self.fields['password1'].required = False
+		self.fields['password2'].required = False
+		self.fields['password1'].widget = forms.HiddenInput()
+		self.fields['password2'].widget = forms.HiddenInput()
 
 class crearKardexPadreForm(ModelForm):
 	class Meta:
@@ -131,19 +157,34 @@ class crearKardexPadreForm(ModelForm):
 			'lugar_trabajo':'Lugar de trabajo'
 		}
 
-class crearUsuarioUserDForm(crearUsuarioUserAForm):
+class crearUsuarioUserDForm(UserCreationForm):
+	class Meta:
+		User = get_user_model()
+		model = User
+		fields =[
+			'first_name',
+			'last_name',
+			'email',
+		]
+		labels = {
+			'first_name' : 'Nombres'
+		}
+		widgets ={
+			'username':forms.TextInput(attrs={'class': 'form-control'}),
+			'first_name':forms.TextInput(attrs={'class': 'form-control'}),
+			'last_name':forms.TextInput(attrs={'class': 'form-control'}),
+			'email':forms.EmailInput(attrs={'class': 'form-control'}),
+		}
+		
 	def __init__(self, *args, **kwargs):
 		super(crearUsuarioUserDForm, self).__init__(*args, **kwargs)
 		self.fields['email'].required = True
 		self.fields['first_name'].required = True
 		self.fields['last_name'].required = True
-
-	def save(self, commit=True):
-		user = super().save(commit=False)
-		user.tipo_usuario = 4
-		if commit:
-			user.save()
-		return user
+		self.fields['password1'].required = False
+		self.fields['password2'].required = False
+		self.fields['password1'].widget = forms.HiddenInput()
+		self.fields['password2'].widget = forms.HiddenInput()
 
 class crearKardexEstudianteForm(ModelForm):
 	class Meta:

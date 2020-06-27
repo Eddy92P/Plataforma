@@ -102,6 +102,33 @@ class Administrativo(models.Model):
 	def __str__(self):
 		return str(self.user)
 
+	def nombre_usuario(self):
+		nombres = self.user.first_name
+		apellidos = self.user.last_name
+		aux = nombres[0].lower()
+		aux1 = apellidos.split(" ")
+		aux2 = aux1[0].lower()
+		aux3 = aux1[1].lower()
+		user = aux + aux2 + aux3
+		return user
+
+	def pass_usuario(self):
+		nombres = self.user.first_name
+		apellidos = self.user.last_name
+		ci = self.ci
+		aux = nombres[0].lower()
+		aux1 = apellidos.split(" ")
+		aux2 = aux1[0].lower()
+		passw = aux + aux2 + ci
+		return passw
+
+	def save(self, *args, **kwargs):
+		super(Administrativo, self).save(*args, **kwargs)
+		self.user.tipo_usuario = 1
+		self.user.username = self.nombre_usuario()
+		self.user.set_password(self.pass_usuario())
+		self.user.save()
+
 class Docente(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name='docente')
 	ci = models.CharField(
@@ -159,6 +186,33 @@ class Docente(models.Model):
 	
 	def fecha_f(self):
 		return self.fecha_ingreso.strftime("%d/%m/%y")
+
+	def nombre_usuario(self):
+		nombres = self.user.first_name
+		apellidos = self.user.last_name
+		aux = nombres[0].lower()
+		aux1 = apellidos.split(" ")
+		aux2 = aux1[0].lower()
+		aux3 = aux1[1].lower()
+		user = aux + aux2 + aux3
+		return user
+
+	def pass_usuario(self):
+		nombres = self.user.first_name
+		apellidos = self.user.last_name
+		ci = self.ci
+		aux = nombres[0].lower()
+		aux1 = apellidos.split(" ")
+		aux2 = aux1[0].lower()
+		passw = aux + aux2 + ci
+		return passw
+
+	def save(self, *args, **kwargs):
+		super(Docente, self).save(*args, **kwargs)
+		self.user.tipo_usuario = 2
+		self.user.username = self.nombre_usuario()
+		self.user.set_password(self.pass_usuario())
+		self.user.save()
 
 class Padre(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name='padre')
@@ -237,6 +291,33 @@ class Padre(models.Model):
 	def __str__(self):
 		return self.user.first_name + " " + self.user.last_name
 
+	def nombre_usuario(self):
+		nombres = self.user.first_name
+		apellidos = self.user.last_name
+		aux = nombres[0].lower()
+		aux1 = apellidos.split(" ")
+		aux2 = aux1[0].lower()
+		aux3 = aux1[1].lower()
+		user = aux + aux2 + aux3
+		return user
+
+	def pass_usuario(self):
+		nombres = self.user.first_name
+		apellidos = self.user.last_name
+		ci = self.ci
+		aux = nombres[0].lower()
+		aux1 = apellidos.split(" ")
+		aux2 = aux1[0].lower()
+		passw = aux + aux2 + ci
+		return passw
+
+	def save(self, *args, **kwargs):
+		super(Padre, self).save(*args, **kwargs)
+		self.user.tipo_usuario = 3
+		self.user.username = self.nombre_usuario()
+		self.user.set_password(self.pass_usuario())
+		self.user.save()
+
 class Estudiante(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name='estudiante')
 	ci = models.CharField(
@@ -280,3 +361,30 @@ class Estudiante(models.Model):
 
 	def __str__(self):
 		return self.user.first_name + " " + self.user.last_name
+
+	def nombre_usuario(self):
+		nombres = self.user.first_name
+		apellidos = self.user.last_name
+		aux = nombres[0].lower()
+		aux1 = apellidos.split(" ")
+		aux2 = aux1[0].lower()
+		aux3 = aux1[1].lower()
+		user = aux + aux2 + aux3
+		return user
+
+	def pass_usuario(self):
+		nombres = self.user.first_name
+		apellidos = self.user.last_name
+		ci = self.ci
+		aux = nombres[0].lower()
+		aux1 = apellidos.split(" ")
+		aux2 = aux1[0].lower()
+		passw = aux + aux2 + ci
+		return passw
+
+	def save(self, *args, **kwargs):
+		super(Estudiante, self).save(*args, **kwargs)
+		self.user.tipo_usuario = 4
+		self.user.username = self.nombre_usuario()
+		self.user.set_password(self.pass_usuario())
+		self.user.save()

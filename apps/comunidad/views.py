@@ -19,7 +19,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model 
 
 def main_page(request):
 	return render(request,'base/index.html',{})
@@ -47,14 +47,13 @@ class crearUsuarioAdministrativo(CreateView):
 			form2save = form2.save(commit=False)
 			form2save.user = form.save()
 			form2save.save()
-			form2save.user.tipo_usuario == 1
 			form2save.user.user_permissions.add(permission)
 			form2save.user.user_permissions.add(permission2)
 			return HttpResponseRedirect(self.success_url)
 		else:
 			return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
-class crearUsuarioDocente(crearUsuarioAdministrativo):
+class crearUsuarioDocente(CreateView):
 	model = Materia
 	second_model = Curso
 	form_class = crearUsuarioUserBForm
@@ -70,6 +69,9 @@ class crearUsuarioDocente(crearUsuarioAdministrativo):
 			context['error'] = "Debe crear cursos primero, antes de registrar un nuevo docente."
 		elif not self.model.objects.all().exists():
 			context['error'] = "Debe crear materias primero, antes de registrar un nuevo docente."
+		if 'form' not in context or 'form2' not in context:
+			context['form'] = self.form_class()
+			context['form2'] = self.second_form_class()
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -83,18 +85,24 @@ class crearUsuarioDocente(crearUsuarioAdministrativo):
 			form2save.user = form.save()
 			form2save.save()
 			form2.save_m2m()
-			form2save.user.tipo_usuario == 2
 			form2save.user.user_permissions.add(permission2)
 			form2save.user.user_permissions.add(permission)
 			return HttpResponseRedirect(self.success_url)
 		else:
 			return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
-class crearUsuarioPadre(crearUsuarioAdministrativo):
+class crearUsuarioPadre(CreateView):
 	form_class = crearUsuarioUserCForm
 	second_form_class = crearKardexPadreForm
 	template_name = 'comunidad/nuevousuariopadre.html'
 	success_url = reverse_lazy('comunidad:listausuariopadre')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		if 'form' not in context or 'form2' not in context:
+			context['form'] = self.form_class()
+			context['form2'] = self.second_form_class()
+		return context
 
 	def post(self, request, *args, **kwargs):
 		self.object = self.get_object
@@ -106,14 +114,13 @@ class crearUsuarioPadre(crearUsuarioAdministrativo):
 			form2save = form2.save(commit=False)
 			form2save.user = form.save()
 			form2save.save()
-			form2save.user.tipo_usuario == 3
 			form2save.user.user_permissions.add(permission2)
 			form2save.user.user_permissions.add(permission)
 			return HttpResponseRedirect(self.success_url)
 		else:
 			return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
-class crearUsuarioEstudiante(crearUsuarioAdministrativo):
+class crearUsuarioEstudiante(CreateView):
 	model = Curso
 	second_model = Padre
 	form_class = crearUsuarioUserDForm
@@ -129,6 +136,9 @@ class crearUsuarioEstudiante(crearUsuarioAdministrativo):
 			context['error'] = "Debe crear usuarios de padres de familia primero, antes de registrar un nuevo estudiante."
 		elif not self.model.objects.all().exists():
 			context['error'] = "Debe crear cursos primero, antes de registrar un nuevo estudiante."
+		if 'form' not in context or 'form2' not in context:
+			context['form'] = self.form_class()
+			context['form2'] = self.second_form_class()
 		return context
 
 	def post(self, request, *args, **kwargs):
@@ -141,7 +151,6 @@ class crearUsuarioEstudiante(crearUsuarioAdministrativo):
 			form2save = form2.save(commit=False)
 			form2save.user = form.save()
 			form2save.save()
-			form2save.user.tipo_usuario == 4
 			form2save.user.user_permissions.add(permission2)
 			form2save.user.user_permissions.add(permission)
 			return HttpResponseRedirect(self.success_url)

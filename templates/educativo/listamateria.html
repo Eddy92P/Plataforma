@@ -15,8 +15,8 @@
 						<div class="img-card-container"><i class="fa fa-camera"></i></div>
 					{% endif %}
 					<div class="card-body">
-					{% if obj.docente_enc %}
-						{% doc_encargado obj curso_id as docente %}
+					{% doc_encargado obj curso_id as docente %}
+					{% if docente %}
 						{% for i in docente|slice:":1" %}
 							<p class="card-text">Prof. {{ i.user.first_name }} {{ i.user.last_name }}</p>
 						{% endfor %}

@@ -88,7 +88,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'
     ),
     path('reset_pass/',
-        permission_required('comunidad.change_user')(auth_views.PasswordChangeView.as_view(template_name = 'comunidad/password_reset_form.html', success_url = '/')), name='reset_password'
+        permission_required('auth.view_educativo')(auth_views.PasswordChangeView.as_view(template_name = 'comunidad/password_reset_form.html', success_url = '/')), name='reset_password'
     ),
     re_path(r'^darbajaadmin/(?P<pk>\d+)/$', 
         permission_required('auth.view_comunidad')(login_required(updateDarBajaAdmin.as_view())), 
