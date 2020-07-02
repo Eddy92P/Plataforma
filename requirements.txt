@@ -23,7 +23,6 @@ isort==4.3.21
 jdcal==1.4.1
 lazy-object-proxy==1.4.3
 mccabe==0.6.1
-mysqlclient==1.4.6
 openpyxl==3.0.3
 Pillow==7.1.2
 pycparser==2.20
