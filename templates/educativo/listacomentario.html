@@ -26,12 +26,11 @@
     		   	<div class="card-footer">
     		      	<small class="text-muted"></small>
     		   	</div>
-                
+                <div class="btn-group float-right" style="padding-top: 5px;" role="group">
+                    <a href="{% url 'educativo:nuevocomentario' %}" class="btn btn-info"><i class="far fa-comment-dots"></i> Comentar</a>
+                </div> 
     		</div>
     	{% endif %}
-        <div class="btn-group float-right" style="padding-top: 5px;" role="group">
-            <a href="{% url 'educativo:nuevocomentario' %}" class="btn btn-info"><i class="far fa-comment-dots"></i> Comentar</a>
-        </div>
 	</div>
 </main>
 {% endblock body %}
