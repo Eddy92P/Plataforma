@@ -120,6 +120,10 @@ urlpatterns = [
         permission_required('comunidad.view_docente')(login_required(listaTareasEntregadas.as_view())), 
         name='listatareas_entregadas'
     ),
+    path('listatareas_entregadashijo/', 
+        permission_required('comunidad.view_padre')(login_required(listaTareasEntregadasHijos.as_view())), 
+        name='listatareas_entregadashijo'
+    ),
     re_path(r'^detalletarea/(?P<pk>\d+)/$', 
         permission_required('comunidad.view_estudiante')(login_required(detalleTarea.as_view())), 
         name='detalletarea'

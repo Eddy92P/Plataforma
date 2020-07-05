@@ -1,0 +1,59 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<div class="container-fluid bootstrap snippet" style="padding-top: 3%">
+	<div class="card border-dark" style="padding-bottom: 10px;">
+		<div class="card-header text-white text-center">Tareas estudiantes</div>
+			<table class="table table-borderless table-hover table-striped" id="lista_tabla">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Docente</th>
+						<th scope="col">Materia</th>
+						<th scope="col">Tarea</th>
+						<th scope="col">Estudiante</th>
+						<th scope="col">Fecha de entrega</th>
+						<th scope="col">Estado</th>
+						<th scope="col">Revisado</th>
+						<th scope="col">Trabajo</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% if object_list %}
+					{% for obj in object_list %}
+						<tr>
+							<th scope="row">{{ obj.id }}</th>
+							<td>{{ obj.tarea.docente }}</td>
+							<td>{{ obj.tarea.tema.materia }}</td>
+							<td>{{ obj.tarea.nombre }}</td>
+							<td>{{ obj.estudiante }}</td>
+							<td>
+							{% if obj.fecha_entrega %}
+								{{ obj.fecha_entrega_corta }}
+							{% endif %}
+							</td>
+							<td>
+								{% if obj.entregado %}
+									Entregado
+								{% else %}
+									No entregado
+								{% endif %}
+							</td>
+							<td style="text-align: center;">
+								{% if obj.revisado %}
+									<i class="fas fa-check"></i>
+								{% endif %}
+							</td>
+							<td>
+								{% if obj.trabajo %}
+								 	<a href="{{ obj.trabajo.url }}">{{ obj.filename }}</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
+	 </div>
+</div>
+
+{% endblock body %}

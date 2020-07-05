@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 
 from apps.educativo.forms import *
 from apps.educativo.models import *
-from apps.comunidad.models import Estudiante, Docente
+from apps.comunidad.models import Estudiante, Docente, Padre
 
 from django.utils import timezone
 import datetime
@@ -346,7 +346,7 @@ class listaTareaE(ListView):
 		pk1 = self.kwargs['pk']
 		return self.model.objects.filter(tema=pk1, estudiante__user_id=self.request.user.id)
 
-class listaTareaD(listaTareaE):
+class listaTareaD(ListView):
 	model = Tarea
 	template_name = "educativo/listatarea_d.html"
 
@@ -359,6 +359,13 @@ class listaTareaD(listaTareaE):
 	def get_queryset(self):
 		pk1 = self.kwargs['pk']
 		return self.model.objects.filter(tema=pk1, docente__user_id=self.request.user.id)
+
+class listaTareasEntregadasHijos(ListView):
+	model = Tarea_estudiante
+	template_name = "educativo/listatareas_entregadashijo.html"
+
+	def get_queryset(self):
+		return self.model.objects.filter(estudiante__in=Estudiante.objects.filter(padre=self.request.user.id))
 
 class listaTareasEntregadas(ListView):
 	model = Tarea_estudiante

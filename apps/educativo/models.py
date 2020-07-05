@@ -249,6 +249,9 @@ class Tarea_estudiante(models.Model):
 	def filename(self):
 		return os.path.basename(self.trabajo.name)
 
+	def fecha_entrega_corta(self):
+		return self.fecha_entrega.strftime("%d-%m-%y a las %H:%M")
+
 class Tarea(models.Model):
 	tema = models.ForeignKey(Tema, on_delete=models.CASCADE)
 	estudiante = models.ManyToManyField('comunidad.Estudiante', through='Tarea_estudiante', help_text='<ul><li>Seleccione los alumnos a los que se enviará la tarea.</li><li>O puede marcar la opción "Seleccionar todo", para seleccionar a todos los alumnos.</li></ul>')
