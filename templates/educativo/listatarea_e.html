@@ -16,7 +16,7 @@
          {% if object_list %}
             {% for obj in object_list %}
                <tr>
-                  <th scope="row">{{ obj.id }}</th>
+                  <th scope="row">{{ obj.num_tarea }}</th>
                   <td>{{ obj.nombre }}</td>
                   <td style="text-align: center;" width="250">
                      <a href="{{ obj.trabajo.url }}" download="">

@@ -8,7 +8,6 @@
       	<table class="table table-borderless table-hover table-striped table-responsive-lg" id="lista_tabla">
          	<thead>
             	<tr>
-               	<th scope="col">#</th>
                	<th scope="col">Curso</th>
                	<th class="text-right" scope="col">Opciones</th>
             	</tr>
@@ -17,7 +16,6 @@
          {% if object_list %}
             {% for obj in object_list %}
                <tr>
-                  <th scope="row">{{ obj.id }}</th>
                   <td>{{ obj.nombre }}</td>
                   <td>
                      

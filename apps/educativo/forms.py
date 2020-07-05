@@ -45,7 +45,7 @@ class crearActividadForm(ModelForm):
 class crearTemaForm(ModelForm):
 	class Meta:
 		model = Tema
-		exclude = ['curso']
+		exclude = ['curso', 'num_tema']
 		labels = {
 			'nombre': 'Título del tema',
 			'contenido': 'Contenido del tema'
@@ -60,7 +60,7 @@ class crearTemaForm(ModelForm):
 class crearTareaEstudianteForm(ModelForm):
 	class Meta:
 		model = Tarea_estudiante
-		exclude = ['estudiante', 'tarea', 'entregado', 'fecha_entrega', 'revisado']
+		exclude = ['estudiante', 'tarea', 'entregado', 'fecha_entrega', 'revisado', 'observaciones']
 
 class recepcionTareaEstudianteForm(ModelForm):
 	class Meta:
@@ -70,7 +70,7 @@ class recepcionTareaEstudianteForm(ModelForm):
 class crearTareaForm(ModelForm):
 	class Meta:
 		model = Tarea
-		exclude = ['fecha_habilitado', 'docente', 'tema']
+		exclude = ['fecha_habilitado', 'docente', 'tema', 'num_tarea']
 		widgets = {
 			'fecha_plazo':Html5DateTimeInput(attrs={'class':'form-control'}),
 		}

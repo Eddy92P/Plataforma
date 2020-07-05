@@ -127,8 +127,8 @@ class Materia(models.Model):
 			seconds_str = " segundo. "
 		return str(int(days[0])) + days_str + str(int(hours[0])) + hours_str + str(int(minutes[0])) + minutes_str + str(int(seconds[0])) + seconds_str
 
-	def temas(self, f1, f2):
-		return Tema.objects.filter(materia=self.id, fecha_inicio__range=(f1, f2))
+	def temas(self, curso, f1, f2):
+		return Tema.objects.filter(materia=self.id, curso=curso , fecha_inicio__range=(f1, f2))
 
 class Actividad(models.Model):
 	nombre = models.CharField(
@@ -182,6 +182,9 @@ class Actividad(models.Model):
 class Tema(models.Model):
 	curso = models.ForeignKey(Curso, on_delete=models.CASCADE, help_text="Seleccione el curso.")
 	materia = models.ForeignKey(Materia, on_delete=models.CASCADE, help_text="Seleccione la materia.")
+	num_tema = models.PositiveSmallIntegerField(
+		null=False
+		)
 	fecha_inicio = models.DateField(
 		auto_now_add = True,
 		null=False,
@@ -220,6 +223,10 @@ class Tarea_estudiante(models.Model):
 		)
 	entregado = models.BooleanField(default=False)
 	revisado = models.BooleanField(default=False, help_text='Marque esta opción para indicar que se revisó la tarea.')
+	observaciones = models.TextField(
+		null=False,
+		blank=False
+		)
 
 	def lapso_retraso(self):
 		diferencia_fechas = datetime.datetime.now() - self.tarea.fecha_plazo
@@ -254,6 +261,9 @@ class Tarea_estudiante(models.Model):
 
 class Tarea(models.Model):
 	tema = models.ForeignKey(Tema, on_delete=models.CASCADE)
+	num_tarea = models.PositiveSmallIntegerField(
+		null = False
+		)
 	estudiante = models.ManyToManyField('comunidad.Estudiante', through='Tarea_estudiante', help_text='<ul><li>Seleccione los alumnos a los que se enviará la tarea.</li><li>O puede marcar la opción "Seleccionar todo", para seleccionar a todos los alumnos.</li></ul>')
 	seleccionar = models.BooleanField(
 		default=False

@@ -27,17 +27,21 @@
                <div class="card-body">
                   <ul class="list-group list-group-flush">
                      {% if f1 and f2 %}
-                        {% for materia in obj.materia.all %}
-                           <p class="card-text item1-head"><b>Materia que dicta</b></p>
-                           <li class="list-group-item">- {{ materia.nombre|title }}</li>
-                           {% tema materia f1 f2 as temas %}
-                           {% for tema in temas %}
-                              <p class="card-text item2-head" style="padding-top: 10px;"><b>Tema de la materia</b></p>
-                              <li class="list-group-item item2">- "{{ tema.nombre|title }}" empezó el {{ tema.fecha_inicio }}</li>
-                              {% tarea tema f1 f2 as tareas %}
-                              {% for tarea in tareas %}
-                                 <p class="card-text item3-head" style="padding-top: 10px;"><b>Tareas del tema</b></p>
-                                 <li class="list-group-item item3">- "{{ tarea.nombre|title }}" se publicó el {{ tarea.fecha_habilitado }}</li>
+                        {% for curso in obj.curso.all %}
+                           <p class="card-text item1-head"><b>Curso</b></p>
+                           <li class="list-group-item">- {{ curso.nombre|title }}</li>
+                           {% for materia in obj.materia.all %}
+                              <p class="card-text item2-head"><b>Materia que dicta</b></p>
+                              <li class="list-group-item item2">- {{ materia.nombre|title }}</li>
+                              {% tema materia curso f1 f2 as temas %}
+                              {% for tema in temas %}
+                                 <p class="card-text item3-head" style="padding-top: 10px;"><b>Tema de la materia</b></p>
+                                 <li class="list-group-item item3">- "{{ tema.nombre|title }}" empezó el {{ tema.fecha_inicio }}</li>
+                                 {% tarea tema f1 f2 as tareas %}
+                                 {% for tarea in tareas %}
+                                    <p class="card-text item4-head" style="padding-top: 10px;"><b>Tareas del tema</b></p>
+                                    <li class="list-group-item item4">- "{{ tarea.nombre|title }}" se publicó el {{ tarea.fecha_habilitado }}</li>
+                                 {% endfor %}
                               {% endfor %}
                            {% endfor %}
                         {% endfor %}

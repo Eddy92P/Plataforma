@@ -69,3 +69,13 @@
 .item3{
   padding-left: 70px;
 }
+
+.item4-head{
+  padding-left: 120px;
+  color: #00958E;
+  text-decoration: underline;
+}
+
+.item4{
+  padding-left: 120px;
+}

@@ -6,9 +6,9 @@
 			<i><h5 style="text-decoration-line: underline;">Pasos para realizar la entrega</h5></i>
 			<p>* Debe hacer click en el bóton <b>"Agregar entrega"</b>.</p>
 			<p>* Posteriormente aparecerá un nuevo formulario, en el cual deberá seleccionar el archivo y luego guardarlo.</p>
-			<p>* Una vez guardado el archivo volverá a ver este formulario, en el cual podrá observar la fecha en que está realizando la entrega, el nombre de su trabajo y un nuevo botón <b>"Editar entrega"</b>, con el cual usted podrá volver a elegir el archivo, en caso de haber cometido un error. <b>(La fecha de entrega no se modificará)</b>.</p>
+			<p>* Una vez guardado el archivo volverá a ver este formulario, en el cual podrá observar la fecha en que está realizando la entrega, el nombre de su trabajo y un nuevo botón <b>"Editar entrega"</b>, con el cual usted podrá volver a elegir el archivo, en caso de haber cometido un error. <b>(La fecha de entrega se modificará)</b>.</p>
 			<p>* El trabajo debe ser enviado bajo el siguiente formato: Por ejemplo, si su nombre es Raúl Flores, que pertenece a primero de secundaria, el archivo debe ir de la siguiente manera <b>"r_flores_primero_secundaria.pdf"</b>.</p>
-			<p>* La entrega o edición de trabajos se cerrará pasada la fecha de plazo, favor tomar en cuenta.</p>
+			<p>* La entrega o edición de trabajos se cerrará pasada la fecha límite, favor tomar en cuenta.</p>
 		</div>
    		<div class="card" style="padding-bottom: 10px;">
    		    <div class="card-header text-white">Detalles de la entrega</div>
@@ -44,6 +44,10 @@
 						<td>{{ tarea_e.filename }}</td>
 					</tr>
 					<tr>
+						<th scope="row">Observaciones</th>
+						<td>{{ tarea_e.observaciones }}</td>
+					</tr>
+					<tr>
 						<th scope="row">Realizar entrega</th>
 						<td>
 						{% if request.user.tipo_usuario == 4 %}
@@ -57,7 +61,7 @@
 							{% if a_tiempo and tarea_e.entregado %}
 					  			<div class="btn-group" role="group">
    			            	        <a href="{% url 'educativo:updateentregatarea' tarea_e.id %}" type="button" class="btn btn-info" title="Detalles">
-   			            	            <i class="fa fa-file"></i> Editar entrega
+   			            	            <i class="fas fa-edit"></i> Editar entrega
    			            	        </a>     
    			            	    </div>
 							{% endif %}

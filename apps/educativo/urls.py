@@ -79,7 +79,7 @@ urlpatterns = [
         permission_required('comunidad.view_docente')(login_required(crearTema.as_view())), 
         name='nuevotema'
     ),
-    re_path(r'^updatetema/(?P<pk>\d+)/$',
+    re_path(r'^updatetema/(?P<pk>\d+)/(?P<curso>\d+)/$',
         permission_required('comunidad.view_docente')(login_required(updateTema.as_view())), 
         name='updatetema'
     ),

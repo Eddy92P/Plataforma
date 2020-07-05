@@ -152,8 +152,14 @@ class crearTema(CreateView):
 		if form.is_valid():
 			pk1 = self.kwargs['pk']
 			materia_pk = form.cleaned_data['materia']
+			num_tema = Tema.objects.filter(materia_id=materia_pk, curso_id=pk1).count()
 			form = form.save(commit=False)
 			form.curso_id = pk1
+			if num_tema == 0:
+				num_tema = 1
+			else:
+				num_tema += 1
+			form.num_tema = num_tema
 			materia = self.second_model_pk.objects.get(id=materia_pk.id)
 			form.save()
 			materia.save()
@@ -168,7 +174,7 @@ class updateTema(UpdateView):
 	success_url = "educativo:listatema_d"
 
 	def get_form_kwargs(self):
-		curso = self.kwargs['pk']
+		curso = self.kwargs['curso']
 		kwargs = super().get_form_kwargs()
 		kwargs['curso'] = curso
 		return kwargs
@@ -287,6 +293,8 @@ class crearTarea(CreateView):
 		if form.is_valid():
 			formsave = form.save(commit=False)
 			formsave.tema = self.second_model.objects.get(id=pk1)
+			num_tarea = self.model.objects.filter(tema_id=pk1).count()
+			formsave.num_tarea = num_tarea + 1
 			materia = Materia.objects.get(id=self.second_model.objects.get(id=pk1).materia_id)
 			materia.save()
 			formsave.docente_id = request.user.id
@@ -305,7 +313,9 @@ class updateTarea(UpdateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		curso = self.kwargs['curso']
+		pk1 = self.kwargs['pk']
 		context['curso'] = curso
+		context['pk1'] = pk1
 		return context
 
 	def get_form_kwargs(self):
@@ -353,7 +363,10 @@ class listaTareaD(ListView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		curso = self.kwargs['curso']
+		pk1 = self.kwargs['pk']
 		context['curso'] = curso
+		context['pk1'] = pk1
+		context['tema'] = Tema.objects.get(id=pk1)
 		return context
 
 	def get_queryset(self):
