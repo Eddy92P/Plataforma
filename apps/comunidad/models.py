@@ -105,11 +105,11 @@ class Administrativo(models.Model):
 	def nombre_usuario(self):
 		nombres = self.user.first_name
 		apellidos = self.user.last_name
+		ci = self.ci
 		aux = nombres[0].lower()
 		aux1 = apellidos.split(" ")
 		aux2 = aux1[0].lower()
-		aux3 = aux1[1].lower()
-		user = aux + aux2 + aux3
+		user = aux + aux2 + ci
 		return user
 
 	def pass_usuario(self):
@@ -190,11 +190,11 @@ class Docente(models.Model):
 	def nombre_usuario(self):
 		nombres = self.user.first_name
 		apellidos = self.user.last_name
+		ci = self.ci
 		aux = nombres[0].lower()
 		aux1 = apellidos.split(" ")
 		aux2 = aux1[0].lower()
-		aux3 = aux1[1].lower()
-		user = aux + aux2 + aux3
+		user = aux + aux2 + ci
 		return user
 
 	def pass_usuario(self):
@@ -294,11 +294,11 @@ class Padre(models.Model):
 	def nombre_usuario(self):
 		nombres = self.user.first_name
 		apellidos = self.user.last_name
+		ci = self.ci
 		aux = nombres[0].lower()
 		aux1 = apellidos.split(" ")
 		aux2 = aux1[0].lower()
-		aux3 = aux1[1].lower()
-		user = aux + aux2 + aux3
+		user = aux + aux2 + ci
 		return user
 
 	def pass_usuario(self):
@@ -365,11 +365,11 @@ class Estudiante(models.Model):
 	def nombre_usuario(self):
 		nombres = self.user.first_name
 		apellidos = self.user.last_name
+		ci = self.ci
 		aux = nombres[0].lower()
 		aux1 = apellidos.split(" ")
 		aux2 = aux1[0].lower()
-		aux3 = aux1[1].lower()
-		user = aux + aux2 + aux3
+		user = aux + aux2 + ci
 		return user
 
 	def pass_usuario(self):

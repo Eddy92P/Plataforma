@@ -21,7 +21,11 @@
 					</tr>
 					<tr>
 						<th scope="row">Fecha de entrega</th>
-						<td>{{ tarea_e.fecha_entrega }}</td>
+						<td>
+							{% if tarea_e.fecha_entrega %}
+								{{ tarea_e.fecha_entrega }}
+							{% endif %}
+						</td>
 					</tr>
 					<tr>
 						{% if tarea_e.entregado == True %}
@@ -45,14 +49,14 @@
 						{% if request.user.tipo_usuario == 4 %}
 							{% if a_tiempo and not tarea_e.entregado %}
 					  			<div class="btn-group" role="group">
-   			            	        <a href="{% url 'educativo:nuevaentregatarea' object.id %}" type="button" class="btn btn-info" title="Detalles">
+   			            	        <a href="{% url 'educativo:updateentregatarea' tarea_e.id %}" type="button" class="btn btn-info" title="Detalles">
    			            	            <i class="fa fa-file"></i> Agregar entrega
    			            	        </a>     
    			            	    </div>
 							{% endif %}
 							{% if a_tiempo and tarea_e.entregado %}
 					  			<div class="btn-group" role="group">
-   			            	        <a href="{% url 'educativo:updateentregatarea' object.id %}" type="button" class="btn btn-info" title="Detalles">
+   			            	        <a href="{% url 'educativo:updateentregatarea' tarea_e.id %}" type="button" class="btn btn-info" title="Detalles">
    			            	            <i class="fa fa-file"></i> Editar entrega
    			            	        </a>     
    			            	    </div>

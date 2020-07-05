@@ -91,27 +91,28 @@ urlpatterns = [
         permission_required('comunidad.view_docente')(login_required(csrf_exempt(listaTemaD.as_view()))), 
         name='listatema_d'
     ),
-    re_path(r'^nuevatarea/(?P<pk>\d+)/$',
+    re_path(r'^nuevatarea/(?P<pk>\d+)/(?P<curso>\d+)/$',
         permission_required('comunidad.view_docente')(login_required(crearTarea.as_view())), 
         name='nuevatarea'
     ),
-    re_path(r'^updatetarea/(?P<pk>\d+)/$',
+    re_path(r'^updatetarea/(?P<pk>\d+)/(?P<curso>\d+)/$',
         permission_required('comunidad.view_docente')(login_required(updateTarea.as_view())), 
         name='updatetarea'
     ),
-    re_path(r'^nuevaentregatarea/(?P<pk>\d+)/$',
-        permission_required('comunidad.view_estudiante')(login_required(crearTareaEstudiante.as_view())), 
-        name='nuevaentregatarea'
-    ),
+    #re_path(r'^nuevaentregatarea/(?P<pk>\d+)/$', permission_required('comunidad.view_estudiante')(login_required(crearTareaEstudiante.as_view())), name='nuevaentregatarea'),
     re_path(r'^updateentregatarea/(?P<pk>\d+)/$',
         permission_required('comunidad.view_estudiante')(login_required(updateTareaEstudiante.as_view())), 
         name='updateentregatarea'
+    ),
+    re_path(r'^recepciontarea/(?P<pk>\d+)/$',
+        permission_required('comunidad.view_docente')(login_required(recepcionTareaEstudiante.as_view())), 
+        name='recepciontarea'
     ),
     re_path(r'^listatarea_e/(?P<pk>\d+)/$', 
         permission_required('comunidad.view_estudiante')(login_required(listaTareaE.as_view())), 
         name='listatarea_e'
     ),
-    re_path(r'^listatarea_d/(?P<pk>\d+)/$', 
+    re_path(r'^listatarea_d/(?P<pk>\d+)/(?P<curso>\d+)/$', 
         permission_required('comunidad.view_docente')(login_required(listaTareaD.as_view())), 
         name='listatarea_d'
     ),

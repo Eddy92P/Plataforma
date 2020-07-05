@@ -135,6 +135,17 @@ class crearTema(CreateView):
 	template_name = "educativo/nuevotema.html"
 	success_url = "educativo:listatema_d"
 
+	def get_context_data(self, **kwargs):
+		context = super(crearTema, self).get_context_data(**kwargs)
+		curso = self.kwargs['pk']
+		context['curso'] = curso
+		return context
+
+	def get_form_kwargs(self):
+		kwargs = super(crearTema, self).get_form_kwargs()
+		kwargs['curso'] = self.kwargs['pk']
+		return kwargs
+
 	def post(self, request, *args, **kwargs):
 		self.object = self.get_object
 		form = self.form_class(request.POST)
@@ -148,13 +159,19 @@ class crearTema(CreateView):
 			materia.save()
 			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': pk1}))
 		else:
-			self.render_to_response(self.get_context_data(form=form))
+			return self.render_to_response(self.get_context_data(form=form))
 
 class updateTema(UpdateView):
 	model = Tema
 	form_class = crearTemaForm
 	template_name = "educativo/nuevotema.html"
 	success_url = "educativo:listatema_d"
+
+	def get_form_kwargs(self):
+		curso = self.kwargs['pk']
+		kwargs = super().get_form_kwargs()
+		kwargs['curso'] = curso
+		return kwargs
 
 	def get_success_url(self):
 		return reverse_lazy(self.success_url, kwargs = {'pk': self.get_object().curso_id})
@@ -173,8 +190,6 @@ class listaTemaE(ListView):
 		pk1 = self.kwargs['pk']
 		if self.request.user.tipo_usuario == 4:
 			return self.model.objects.filter(curso=Estudiante.objects.get(user_id=self.request.user.id).curso_id, materia=pk1)
-		else:
-			return self.model.objects.filter(materia=pk1)
 
 class listaTemaD(ListView):
 	model_pk = Curso
@@ -192,7 +207,7 @@ class listaTemaD(ListView):
 		pk1 = self.kwargs['pk']
 		return self.model.objects.filter(curso=pk1)
 
-class crearTareaEstudiante(CreateView):
+"""class crearTareaEstudiante(CreateView):
 	form_class = crearTareaEstudianteForm
 	template_name = "educativo/nuevaentregatarea.html"
 	success_url = "educativo:detalletarea"
@@ -210,7 +225,7 @@ class crearTareaEstudiante(CreateView):
 			form.save()
 			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': pk1}))
 		else:
-			return self.render_to_response(self.get_context_data(form=form))
+			return self.render_to_response(self.get_context_data(form=form))"""
 
 class updateTareaEstudiante(UpdateView):
 	model = Tarea_estudiante
@@ -218,8 +233,32 @@ class updateTareaEstudiante(UpdateView):
 	template_name = "educativo/nuevaentregatarea.html"
 	success_url = "educativo:detalletarea"
 
+	def post(self, request, *args, **kwargs):
+		self.object = self.get_object
+		pk1 = self.kwargs['pk']
+		form = self.form_class(request.POST, request.FILES, instance=self.model.objects.get(id=pk1))
+		if form.is_valid():
+			form = form.save(commit=False)
+			form.estudiante_id = request.user.id
+			form.tarea_id = self.model.objects.get(id=pk1).tarea_id
+			form.entregado = True
+			form.fecha_entrega = datetime.datetime.now()
+			form.save()
+			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': self.model.objects.get(id=pk1).tarea_id}))
+		else:
+			return self.render_to_response(self.get_context_data(form=form))
+
 	def get_success_url(self):
 		return reverse_lazy(self.success_url, kwargs = {'pk': self.get_object().pk})
+
+class recepcionTareaEstudiante(UpdateView):
+	model = Tarea_estudiante
+	form_class = recepcionTareaEstudianteForm
+	template_name = "educativo/nuevaentregatarea.html"
+	success_url = "educativo:listatareas_entregadas"
+
+	def get_success_url(self):
+		return reverse_lazy(self.success_url, kwargs = {'pk': self.get_object().tarea.id})
 
 class crearTarea(CreateView):
 	model = Tarea
@@ -228,16 +267,23 @@ class crearTarea(CreateView):
 	template_name = "educativo/nuevatarea.html"
 	success_url = "educativo:listatarea_d"
 
-	def dispatch(self, *args, **kwargs):
-		if self.second_model.objects.all().exists():
-			return super().dispatch(self.request, *args, **kwargs)
-		else:
-			return render(self.request, "base/index.html")
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		curso = self.kwargs['curso']
+		context['curso'] = curso
+		return context
+
+	def get_form_kwargs(self):
+		curso = self.kwargs['curso']
+		kwargs = super().get_form_kwargs()
+		kwargs['curso'] = curso
+		return kwargs
 
 	def post(self, request, *args, **kwargs):
 		self.object = self.get_object
 		form = self.form_class(request.POST, request.FILES)
 		pk1 = self.kwargs['pk']
+		curso = self.kwargs['curso']
 		if form.is_valid():
 			formsave = form.save(commit=False)
 			formsave.tema = self.second_model.objects.get(id=pk1)
@@ -246,7 +292,7 @@ class crearTarea(CreateView):
 			formsave.docente_id = request.user.id
 			formsave.save()
 			form.save_m2m()
-			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': pk1}))
+			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': pk1, 'curso': curso}))
 		else:
 			return self.render_to_response(self.get_context_data(form=form))
 
@@ -255,6 +301,18 @@ class updateTarea(UpdateView):
 	form_class = crearTareaForm
 	template_name = "educativo/nuevatarea.html"
 	success_url = "educativo:listatarea_d"
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		curso = self.kwargs['curso']
+		context['curso'] = curso
+		return context
+
+	def get_form_kwargs(self):
+		curso = self.kwargs['curso']
+		kwargs = super().get_form_kwargs()
+		kwargs['curso'] = curso
+		return kwargs
 
 	def post(self, request, *args, **kwargs):
 		self.object = self.get_object
@@ -265,6 +323,7 @@ class updateTarea(UpdateView):
 			materia = Materia.objects.get(id=self.model.objects.get(id=pk1).tema.materia_id)
 			materia.save()
 			form1.save()
+			form.save_m2m()
 			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': self.get_object().tema.pk}))
 		else:
 			return self.render_to_response(self.get_context_data(form=form))
@@ -285,11 +344,21 @@ class listaTareaE(ListView):
 
 	def get_queryset(self):
 		pk1 = self.kwargs['pk']
-		return self.model.objects.filter(tema=pk1)
+		return self.model.objects.filter(tema=pk1, estudiante__user_id=self.request.user.id)
 
 class listaTareaD(listaTareaE):
 	model = Tarea
 	template_name = "educativo/listatarea_d.html"
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		curso = self.kwargs['curso']
+		context['curso'] = curso
+		return context
+
+	def get_queryset(self):
+		pk1 = self.kwargs['pk']
+		return self.model.objects.filter(tema=pk1, docente__user_id=self.request.user.id)
 
 class listaTareasEntregadas(ListView):
 	model = Tarea_estudiante
@@ -299,6 +368,7 @@ class listaTareasEntregadas(ListView):
 		context = super().get_context_data(**kwargs)
 		pk1 = self.kwargs['pk']
 		context['tarea'] = Tarea.objects.get(id=pk1)
+		context['a_tiempo'] = Tarea.objects.get(id=pk1).fecha_plazo > datetime.datetime.now()
 		return context
 
 	def get_queryset(self):
@@ -315,10 +385,8 @@ class detalleTarea(DetailView):
 		pk1 = self.kwargs['pk']
 		context['a_tiempo'] = self.model.objects.get(id=pk1).fecha_plazo > datetime.datetime.now()
 		context['en_retraso'] = self.model.objects.get(id=pk1).fecha_plazo < datetime.datetime.now()
-		try:
-			context['tarea_e'] = self.second_model.objects.get(tarea=pk1, estudiante=self.request.user.id)
-		except Exception as e:
-			pass
+		context['tarea_e'] = self.second_model.objects.get(tarea=pk1, estudiante=self.request.user.id)
+
 		return context
 
 class crearMaterial(CreateView):
@@ -385,9 +453,10 @@ class listaMaterialD(listaMaterial):
 	template_name = "educativo/listamaterial_d.html"
 
 class crearObservacion(CreateView):
+	model = Observacion
 	form_class = crearObservacionForm
 	template_name = "educativo/nuevaobservacion.html"
-	success_url = "educativo:listaobservacion_docente"
+	success_url = "educativo:listatareas_entregadas"
 
 	def get(self, request, *args, **kwargs):
 		self.object = self.get_object
@@ -405,17 +474,18 @@ class crearObservacion(CreateView):
 		self.object = self.get_object
 		form = self.form_class(request.POST)
 		if form.is_valid():
+			pk1 = self.kwargs['pk']
 			form = form.save(commit=False)
 			form.docente_id = request.user.id
 			form.save()
-			return HttpResponseRedirect(reverse_lazy(self.success_url))
+			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': Tarea_estudiante.objects.get(id=pk1).tarea.id}))
 		else:
 			return self.render(self.get_context_data(form=form))
 
-class crearObservacionEstudiante(crearObservacion):
+class crearObservacionEstudiante(CreateView):
 	form_class = crearObservacionForm
 	template_name = "educativo/nuevaobservacion.html"
-	success_url = "educativo:listaobservacion_docente"
+	success_url = "comunidad:listaestudiantes_curso"
 
 	def get(self, request, *args, **kwargs):
 		self.object = self.get_object
@@ -427,6 +497,18 @@ class crearObservacionEstudiante(crearObservacion):
 		except Exception as e:
 			form = self.form_class()
 		return self.render_to_response(self.get_context_data(form=form))
+
+	def post(self, request, *args, **kwargs):
+		self.object = self.get_object
+		form = self.form_class(request.POST)
+		if form.is_valid():
+			pk1 = self.kwargs['pk']
+			form = form.save(commit=False)
+			form.docente_id = request.user.id
+			form.save()
+			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': Estudiante.objects.get(user_id=pk1).curso_id}))
+		else:
+			return self.render(self.get_context_data(form=form))
 
 class updateObservacion(UpdateView):
 	model = Observacion

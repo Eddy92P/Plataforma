@@ -61,9 +61,6 @@ class Materia_curso(models.Model):
 	materia = models.ForeignKey('Materia', on_delete=models.PROTECT)
 	curso = models.ForeignKey(Curso, on_delete=models.PROTECT)
 
-	class Meta:
-		unique_together = ('materia', 'curso')
-
 class Materia(models.Model):
 	nombre = models.CharField(
 		unique=True,
@@ -222,9 +219,7 @@ class Tarea_estudiante(models.Model):
 		blank = True
 		)
 	entregado = models.BooleanField(default=False)
-
-	class Meta:
-		unique_together = ('estudiante', 'tarea')
+	revisado = models.BooleanField(default=False, help_text='Marque esta opción para indicar que se revisó la tarea.')
 
 	def lapso_retraso(self):
 		diferencia_fechas = datetime.datetime.now() - self.tarea.fecha_plazo

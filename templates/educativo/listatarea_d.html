@@ -5,7 +5,7 @@
       <div class="card-header text-white text-center">
          Tema "{{ tema|title }}" - Tareas (Docente)
          {% if request.user.tipo_usuario == 2 %}
-            <a href="{% url 'educativo:nuevatarea' pk1 %}" type="button" class="btn btn-primary btn-sm float-right" title="Agregar tarea"><i class="fas fa-plus-circle"></i> Agregar</a>
+            <a href="{% url 'educativo:nuevatarea' pk1 curso %}" type="button" class="btn btn-primary btn-sm float-right" title="Agregar tarea"><i class="fas fa-plus-circle"></i> Agregar</a>
          {% endif %}
       </div>
       <table class="table table-borderless table-hover table-striped table-responsive-lg" id="lista_tabla">
@@ -32,7 +32,7 @@
                      {% if perms.comunidad.view_docente %}
                         {% if request.user.tipo_usuario == 2 %}
                            <div class="btn-group" role="group">
-                              <a href="{% url 'educativo:updatetarea' obj.id %}" type="button" class="btn btn-primary btn-sm" title="Editar">
+                              <a href="{% url 'educativo:updatetarea' obj.id curso %}" type="button" class="btn btn-primary btn-sm" title="Editar">
                                  <i class="fas fa-edit"></i> Editar
                               </a>
                            </div>

@@ -51,10 +51,21 @@ class crearTemaForm(ModelForm):
 			'contenido': 'Contenido del tema'
 		}
 
+	def __init__(self, *args, **kwargs):
+		curso = kwargs.pop("curso", None)
+		super(crearTemaForm, self).__init__(*args, **kwargs)
+		if curso:
+			self.fields['materia'].queryset = Materia.objects.filter(curso__id=curso)
+
 class crearTareaEstudianteForm(ModelForm):
 	class Meta:
 		model = Tarea_estudiante
-		exclude = ['estudiante', 'tarea', 'entregado', 'fecha_entrega']
+		exclude = ['estudiante', 'tarea', 'entregado', 'fecha_entrega', 'revisado']
+
+class recepcionTareaEstudianteForm(ModelForm):
+	class Meta:
+		model = Tarea_estudiante
+		exclude = ['estudiante', 'tarea', 'entregado', 'fecha_entrega', 'trabajo']
 
 class crearTareaForm(ModelForm):
 	class Meta:
@@ -71,8 +82,11 @@ class crearTareaForm(ModelForm):
 		}
 
 	def __init__(self, *args, **kwargs):
+		curso = kwargs.pop("curso", None)
 		super().__init__(*args, **kwargs)
 		self.fields["fecha_plazo"].input_formats = ["%Y-%m-%dT%H:%M", "%Y-%m-%d %H:%M"]
+		if curso:
+			self.fields["estudiante"].queryset = Estudiante.objects.filter(curso_id=curso)
 
 class crearMaterialForm(ModelForm):
 	class Meta:
