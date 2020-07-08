@@ -55,8 +55,7 @@ class Administrativo(models.Model):
 		)
 	telefono_fijo = models.CharField(
 		max_length = 7,
-		null=False,
-		blank=False,
+		blank=True,
 		validators=[
 			RegexValidator(
 				regex=r'^[0-9]{7}',
@@ -159,8 +158,7 @@ class Docente(models.Model):
 		)
 	telefono_fijo = models.CharField(
 		max_length = 7,
-		null=False,
-		blank=False,
+		blank=True,
 		validators=[
 			RegexValidator(
 				regex=r'^[0-9]{7}',
@@ -244,8 +242,7 @@ class Padre(models.Model):
 		)
 	telefono_fijo = models.CharField(
 		max_length = 7,
-		null=False,
-		blank=False,
+		blank=True,
 		validators=[
 			RegexValidator(
 				regex=r'^[0-9]{7}',
@@ -263,13 +260,11 @@ class Padre(models.Model):
 		)
 	ocupacion = models.CharField(
 		max_length=50,
-		null=False,
-		blank=False
+		blank=True
 		)
 	lugar_trabajo = models.CharField(
 		max_length=60,
-		null=False,
-		blank=False,
+		blank=True,
 		validators=[
 			RegexValidator(
 				regex=r'^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9]{5,}$',
@@ -322,8 +317,7 @@ class Estudiante(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name='estudiante')
 	ci = models.CharField(
 		max_length=9,
-		null=False,
-		blank=False,
+		blank=True,
 		unique=True,
 		validators=[
 			RegexValidator(
@@ -333,10 +327,22 @@ class Estudiante(models.Model):
 				)
 			]
 		)
-	telefono_celular = models.CharField(
-		max_length = 8,
+	rude = models.CharField(
+		max_length=17,
 		null=False,
 		blank=False,
+		unique=True,
+		validators=[
+			RegexValidator(
+				regex=r'^[0-9]{15,16}$',
+				message='RUDE tiene un máximo de 16 dígitos y debe contener sólo números.',
+				code='Numero Invalido'
+				)
+			]
+		)
+	telefono_celular = models.CharField(
+		max_length = 8,
+		blank=True,
 		unique=True,
 		validators=[
 			RegexValidator(
@@ -363,23 +369,16 @@ class Estudiante(models.Model):
 		return self.user.first_name + " " + self.user.last_name
 
 	def nombre_usuario(self):
-		nombres = self.user.first_name
-		apellidos = self.user.last_name
-		ci = self.ci
-		aux = nombres[0].lower()
-		aux1 = apellidos.split(" ")
-		aux2 = aux1[0].lower()
-		user = aux + aux2 + ci
-		return user
+		return self.rude
 
 	def pass_usuario(self):
 		nombres = self.user.first_name
 		apellidos = self.user.last_name
-		ci = self.ci
+		rude = self.rude
 		aux = nombres[0].lower()
 		aux1 = apellidos.split(" ")
 		aux2 = aux1[0].lower()
-		passw = aux + aux2 + ci
+		passw = aux + aux2 + rude
 		return passw
 
 	def save(self, *args, **kwargs):

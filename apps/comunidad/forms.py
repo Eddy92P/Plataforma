@@ -18,7 +18,7 @@ class crearUsuarioUserAForm(UserCreationForm):
 		fields =[
 			'first_name',
 			'last_name',
-			'email',
+			'email'
 		]
 		labels = {
 			'first_name' : 'Nombres'
@@ -119,6 +119,7 @@ class crearUsuarioUserCForm(UserCreationForm):
 			'first_name',
 			'last_name',
 			'email',
+			'is_active'
 		]
 		labels = {
 			'first_name' : 'Nombres'
@@ -165,6 +166,7 @@ class crearUsuarioUserDForm(UserCreationForm):
 			'first_name',
 			'last_name',
 			'email',
+			'is_active'
 		]
 		labels = {
 			'first_name' : 'Nombres'

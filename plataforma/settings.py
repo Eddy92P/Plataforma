@@ -146,4 +146,10 @@ LOGIN_URL = reverse_lazy('comunidad:login')
 LOGOUT_URL = reverse_lazy('comunidad:logout')
 LOGOUT_REDIRECT_URL = reverse_lazy('comunidad:login')
 
-AUTH_USER_MODEL = "comunidad.User" 
+AUTH_USER_MODEL = "comunidad.User"
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'edpe1992@gmail.com'
+EMAIL_HOST_PASSWORD = 'Vetealaversh2468@@@'
