@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from apps.educativo.forms import *
 from apps.educativo.models import *
 from apps.comunidad.models import Estudiante, Docente, Padre
+from django.db.models import Q
 
 from django.utils import timezone
 import datetime
@@ -573,6 +574,12 @@ class crearComentario(CreateView):
 class listaComentario(ListView):
 	model = Comentario
 	template_name = "educativo/listacomentario.html"
+
+	def get_queryset(self):
+		if self.request.user.tipo_usuario == 1:
+			return self.model.objects.filter(Q(usuario=self.request.user.id) | Q(usuario__tipo_usuario=3))
+		elif self.request.user.tipo_usuario == 3:
+			return self.model.objects.filter(usuario=self.request.user.id)
 
 class crearPension(CreateView):
 	form_class = crearPensionForm

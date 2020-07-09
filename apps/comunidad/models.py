@@ -334,7 +334,7 @@ class Estudiante(models.Model):
 		unique=True,
 		validators=[
 			RegexValidator(
-				regex=r'^[0-9]{15,16}$',
+				regex=r'^[0-9]{15,17}$',
 				message='RUDE tiene un máximo de 16 dígitos y debe contener sólo números.',
 				code='Numero Invalido'
 				)
