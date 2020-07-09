@@ -25,5 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^$', RedirectView.as_view(url=reverse_lazy('comunidad:main')), name='home'),
     path('comunidad/', include('apps.comunidad.urls', namespace='comunidad')),
-    path('educativo/', include('apps.educativo.urls', namespace='educativo'))
+    path('educativo/', include('apps.educativo.urls', namespace='educativo')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

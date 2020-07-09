@@ -93,7 +93,7 @@
 					<b>Bienvenid@!</b> {% if request.user.tipo_usuario == 2 %} Prof. {% endif %}{{ request.user.first_name }}
 				</a>
 				<div class="dropdown-menu dropdown-menu-right text-right">
-					<a class="dropdown-item" href="{% url 'comunidad:reset_password' %}">Cambiar Contraseña</a>
+					<a class="dropdown-item" href="{% url 'comunidad:change_password' %}">Cambiar Contraseña</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="{% url 'comunidad:logout' %}">Salir</a>
 				</div>

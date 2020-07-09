@@ -3,7 +3,7 @@ from django.urls import path, re_path, include, reverse_lazy
 from django.contrib import admin
 from apps.comunidad.models import *
 from apps.comunidad.views import *
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.csrf import csrf_exempt
 
@@ -11,6 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import views as auth_views
 
 from rest_framework import routers
+
+from django.urls import reverse_lazy
 
 urlpatterns = [
     #login_required metodo de forsado de login
@@ -80,15 +82,30 @@ urlpatterns = [
         permission_required('auth.view_comunidad') (login_required(agregarPermisos.as_view())), 
         name='agregarpermisos'
     ),
-    #actualisacion de cuenta por el usuario
+    #actualizacion de cuenta por el usuario
   
-    #login_required metodo de forsado de login, logout_then_login metodos de logeo de django
+    #login_required metodo de forzado de login, logout_then_login métodos de logeo de django
     path('login/', LoginView.as_view(template_name = 'comunidad/login.html'), name='login'
     ),
     path('logout/', LogoutView.as_view(), name='logout'
     ),
+    path('change_pass/',
+        permission_required('auth.view_educativo')(auth_views.PasswordChangeView.as_view(template_name = 'comunidad/password_change_form.html', success_url = reverse_lazy('comunidad:change_done_password'))), name='change_password'
+    ),
+    path('change_done_pass/',
+        permission_required('auth.view_educativo')(auth_views.PasswordChangeDoneView.as_view(template_name = 'comunidad/password_change_done_form.html')), name='change_done_password'
+    ),
     path('reset_pass/',
-        permission_required('auth.view_educativo')(auth_views.PasswordChangeView.as_view(template_name = 'comunidad/password_reset_form.html', success_url = '/')), name='reset_password'
+        (auth_views.PasswordResetView.as_view(template_name = 'comunidad/password_reset_form.html', email_template_name = 'comunidad/password_reset_email.html', success_url = reverse_lazy('comunidad:reset_done_password'))), name='reset_password'
+    ),
+    path('reset_done_pass/',
+        (auth_views.PasswordResetDoneView.as_view(template_name = 'comunidad/password_reset_done_form.html')), name='reset_done_password'
+    ),
+    re_path(r'^reset_confirm_pass/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
+        (auth_views.PasswordResetConfirmView.as_view(template_name = 'comunidad/password_reset_confirm_form.html', success_url = reverse_lazy('comunidad:reset_complete_password'))), name='reset_confirm_password'
+    ),
+    path('reset_complete_pass/',
+        (auth_views.PasswordResetCompleteView.as_view(template_name = 'comunidad/password_reset_complete_form.html')), name='reset_complete_password'
     ),
     re_path(r'^darbajaadmin/(?P<pk>\d+)/$', 
         permission_required('auth.view_comunidad')(login_required(updateDarBajaAdmin.as_view())), 
