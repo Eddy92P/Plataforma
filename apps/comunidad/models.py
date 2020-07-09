@@ -328,13 +328,13 @@ class Estudiante(models.Model):
 			]
 		)
 	rude = models.CharField(
-		max_length=17,
+		max_length=16,
 		null=False,
 		blank=False,
 		unique=True,
 		validators=[
 			RegexValidator(
-				regex=r'^[0-9]{15,17}$',
+				regex=r'[0-9]{15,16}$',
 				message='RUDE tiene un máximo de 16 dígitos y debe contener sólo números.',
 				code='Numero Invalido'
 				)
