@@ -198,6 +198,7 @@ class crearKardexEstudianteForm(ModelForm):
 		}
 		labels = {
 			'ci':'C.I.',
+			'rude':'RUDE',
 			'telefono_celular':'Teléfono celular',
 			'direccion':'Dirección',
 			'padre':'Padre o tutor'
