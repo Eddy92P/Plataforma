@@ -55,7 +55,7 @@ class Curso(models.Model):
 		max_length=35,
 		null=False,
 		blank=False,
-		help_text="Ej: 1º de Secundaria, 1º de Primaria, etc."
+		help_text="Ej: Primero, Segundo, Tercero, etc."
 		)
 		
 	def __str__(self):
