@@ -15,7 +15,7 @@ import datetime
 
 def validate_file_extension(value):
 	ext = os.path.splitext(value.name)[1]
-	valid_extensions = ['.pdf','.doc','.docx']
+	valid_extensions = ['.pdf','.doc','.docx', '.png', '.gif', '.jpg']
 	if not ext in valid_extensions:
 		raise ValidationError(u'Tipo de archivo no soportado')
 
@@ -33,19 +33,26 @@ def validate_file_size_e(value):
 
 def validate_file_size_d(value):
 	file_size = value.file.size
-	limit_kb = 1000
+	limit_kb = 3000
 	if file_size > limit_kb*1024:
-		raise ValidationError(u"El tamaño máximo permitido es de 1MB")
+		raise ValidationError(u"El tamaño máximo permitido es de 3MB")
 
 def validate_file_size_d_m(value):
 	file_size = value.file.size
-	limit_kb = 5000
+	limit_kb = 7000
 	if file_size > limit_kb*1024:
-		raise ValidationError(u"El tamaño máximo permitido es de 5MB")
+		raise ValidationError(u"El tamaño máximo permitido es de 7MB")
 
 class Curso(models.Model):
+	ciclo = models.CharField(
+		max_length=1,
+		null=False,
+		blank=False,
+		help_text="Escoja el ciclo al que pertenece este curso.",
+		choices=(('I', 'Inicial'), ('P', 'Primaria'), ('S', 'Secundaria'))
+		)
 	nombre = models.CharField(
-		max_length = 35,
+		max_length=35,
 		null=False,
 		blank=False,
 		help_text="Ej: 1º de Secundaria, 1º de Primaria, etc."
@@ -214,7 +221,7 @@ class Tarea_estudiante(models.Model):
 		blank=False,
 		upload_to='tareas_estudiantes/',
 		validators=[validate_file_extension, validate_file_size_e],
-		help_text = "Los fomatos permitidos son .pdf .doc y .docx"
+		help_text = "Los fomatos permitidos son .pdf, .doc, .docx, .jpg, .gif, .jpg y debe tener un tamaño máximo de 3MB"
 		)
 	fecha_entrega = models.DateTimeField(
 		auto_now_add = False,
@@ -264,7 +271,7 @@ class Tarea(models.Model):
 	num_tarea = models.PositiveSmallIntegerField(
 		null = False
 		)
-	estudiante = models.ManyToManyField('comunidad.Estudiante', through='Tarea_estudiante', help_text='<ul><li>Seleccione los alumnos a los que se enviará la tarea.</li><li>O puede marcar la opción "Seleccionar todo", para seleccionar a todos los alumnos.</li></ul>')
+	estudiante = models.ManyToManyField('comunidad.Estudiante', through='Tarea_estudiante', help_text='<ul><li>ADVERTENCIA!!! si selecciona un elemento de la lista ya no podrá seleccionar todos los estudiantes con el botón "Seleccionar todo", en caso de hacerlo, recargue la página para poder seleccionar a todos los estudiantes.</li><li>Seleccione los alumnos a los que se enviará la tarea.</li><li>O puede marcar la opción "Seleccionar todo", para seleccionar a todos los alumnos.</li></ul>')
 	seleccionar = models.BooleanField(
 		default=False
 		)
@@ -287,7 +294,7 @@ class Tarea(models.Model):
 		blank=False,
 		upload_to='tareas_docentes/',
 		validators=[validate_file_extension, validate_file_size_d],
-		help_text = "Los fomatos permitidos son .pdf .doc y .docx"
+		help_text = "Los fomatos permitidos son .pdf, .doc, .docx, .png, .jpg, .gif y debe tener un tamaño máximo de 3MB"
 		)
 
 	def __str__(self):
@@ -309,7 +316,7 @@ class Material(models.Model):
 		blank=False,
 		upload_to='material_docentes/',
 		validators=[validate_file_extension, validate_file_size_d_m],
-		help_text = "Los fomatos permitidos son .pdf .doc y .docx"
+		help_text = "Los fomatos permitidos son .pdf, .doc, .docx y debe tener un tamaño máximo de 7MB"
 		)
 	fecha = models.DateField(
 		auto_now_add=True,

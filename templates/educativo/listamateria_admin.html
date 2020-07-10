@@ -9,6 +9,8 @@
          	<thead>
             	<tr>
                	<th scope="col">#</th>
+                  <th scope="col">Ciclos</th>
+                  <th scope="col">Cursos</th>
                	<th scope="col">Materia</th>
                   <th scope="col">Docentes asignados</th>
                	<th class="text-right" scope="col">Opciones</th>
@@ -19,6 +21,24 @@
             {% for obj in object_list %}
                <tr>
                   <th scope="row">{{ obj.id }}</th>
+                  <td>
+                     <ul>
+                        {% for curso in obj.curso.all %}
+                           <li>
+                              {{ curso.get_ciclo_display }}
+                           </li>
+                        {% endfor %}
+                     </ul>
+                  </td>
+                  <td>
+                     <ul>
+                        {% for curso in obj.curso.all %}
+                           <li>
+                              {{ curso.nombre }}
+                           </li>
+                        {% endfor %}
+                     </ul>
+                  </td>
                   <td>{{ obj.nombre }}</td>
                   <td>
                      <ul>

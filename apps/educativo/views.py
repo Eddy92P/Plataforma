@@ -506,7 +506,7 @@ class crearObservacion(CreateView):
 class crearObservacionEstudiante(CreateView):
 	form_class = crearObservacionForm
 	template_name = "educativo/nuevaobservacion.html"
-	success_url = "comunidad:listaestudiantes_curso"
+	success_url = "educativo:listaobservacion_docente"
 
 	def get(self, request, *args, **kwargs):
 		self.object = self.get_object
@@ -527,7 +527,7 @@ class crearObservacionEstudiante(CreateView):
 			form = form.save(commit=False)
 			form.docente_id = request.user.id
 			form.save()
-			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': Estudiante.objects.get(user_id=pk1).curso_id}))
+			return HttpResponseRedirect(reverse_lazy(self.success_url))
 		else:
 			return self.render(self.get_context_data(form=form))
 
@@ -553,7 +553,7 @@ class listaObservacionDocente(ListView):
 
 class listaObservacionAdmin(ListView):
 	model = Observacion
-	template_name = "educativo/listaobservacion_docente.html"
+	template_name = "educativo/listaobservacion_admin.html"
 
 class crearComentario(CreateView):
 	form_class = crearComentarioForm

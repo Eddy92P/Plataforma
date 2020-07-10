@@ -1,0 +1,39 @@
+{% extends "base/index.html" %}	
+{% block body %}
+<div class="container-fluid" style="padding-top: 3%">
+   	<div class="card border-dark" style="padding-bottom: 10px;">
+      	<div class="card-header text-white text-center">
+            Observaciones Estudiantes
+      	</div>
+      	<table class="table table-borderless table-hover table-striped table-responsive-lg" id="lista_tabla">
+         	<thead>
+            	<tr>
+                  <th scope="col">Docente</th>
+                  <th scope="col">Ciclo</th>
+               	<th scope="col">Curso</th>
+                  <th scope="col">Materia</th>
+                  <th scope="col">Estudiante</th>
+                  <th scope="col">Razón</th>
+                  <th scope="col">Descripción</th>
+            	</tr>
+         </thead>
+         <tbody>
+         {% if object_list %}
+            {% for obj in object_list %}
+               <tr>
+                  <td>{{ obj.docente }}</td>
+                  <td>{{ obj.curso.get_ciclo_display }}</td>
+                  <td>{{ obj.curso }}</td>
+                  <td>{{ obj.materia }}</td>
+                  <td>{{ obj.estudiante }}</td>
+                  <td>{{ obj.get_razon_display }}</td>
+                  <td>{{ obj.descripcion }}</td>
+               </tr>
+            {% endfor %}
+         {% endif %}
+         </tbody>
+      </table>
+   </div>
+</div>
+
+{% endblock body %}
