@@ -52,10 +52,10 @@ class crearTemaForm(ModelForm):
 		}
 
 	def __init__(self, *args, **kwargs):
-		curso = kwargs.pop("curso", None)
+		docente = kwargs.pop("docente", None)
 		super(crearTemaForm, self).__init__(*args, **kwargs)
-		if curso:
-			self.fields['materia'].queryset = Materia.objects.filter(curso__id=curso)
+		if docente:
+			self.fields['materia'].queryset = Materia.objects.filter(docente=docente.id)
 
 class crearTareaEstudianteForm(ModelForm):
 	class Meta:

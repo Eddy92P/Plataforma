@@ -138,13 +138,12 @@ class crearTema(CreateView):
 
 	def get_context_data(self, **kwargs):
 		context = super(crearTema, self).get_context_data(**kwargs)
-		curso = self.kwargs['pk']
-		context['curso'] = curso
+		kwargs['docente'] = self.request.user
 		return context
 
 	def get_form_kwargs(self):
 		kwargs = super(crearTema, self).get_form_kwargs()
-		kwargs['curso'] = self.kwargs['pk']
+		kwargs['docente'] = self.request.user
 		return kwargs
 
 	def post(self, request, *args, **kwargs):
@@ -175,9 +174,8 @@ class updateTema(UpdateView):
 	success_url = "educativo:listatema_d"
 
 	def get_form_kwargs(self):
-		curso = self.kwargs['curso']
 		kwargs = super().get_form_kwargs()
-		kwargs['curso'] = curso
+		kwargs['docente'] = self.request.user
 		return kwargs
 
 	def get_success_url(self):
