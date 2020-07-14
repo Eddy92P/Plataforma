@@ -22,7 +22,7 @@ class cursoAutocomplete(autocomplete.Select2QuerySetView):
 	def get_queryset(self):
 		if not self.request.user.is_authenticated:
 			return Curso.objects.none()
-		qs = Curso.objects.all().order_by('id')
+		qs = Curso.objects.filter(docente=self.request.user.id).order_by('id')
 		if self.q:
 			qs = qs.filter(nombre__istartswith=self.q)
 		return qs
@@ -31,7 +31,7 @@ class materiaAutocomplete(autocomplete.Select2QuerySetView):
 	def get_queryset(self):
 		if not self.request.user.is_authenticated:
 			return Materia.objects.none()
-		qs = Materia.objects.all().order_by('id')
+		qs = Materia.objects.filter(docente=self.request.user.id).order_by('id')
 		curso = self.forwarded.get('curso', None)
 		if curso:
 			qs = qs.filter(curso=curso)

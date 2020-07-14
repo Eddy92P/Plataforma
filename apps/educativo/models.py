@@ -59,7 +59,7 @@ class Curso(models.Model):
 		)
 		
 	def __str__(self):
-		return self.nombre
+		return self.nombre + " de " + str(self.get_ciclo_display())
 
 	def docente_enc(self):
 		return Docente.objects.filter(curso__id=self.id)
