@@ -247,7 +247,7 @@ class updateTareaEstudiante(UpdateView):
 			form.estudiante_id = request.user.id
 			form.tarea_id = self.model.objects.get(id=pk1).tarea_id
 			form.entregado = True
-			form.fecha_entrega = datetime.datetime.now()
+			form.fecha_entrega = timezone.now()
 			form.save()
 			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': self.model.objects.get(id=pk1).tarea_id}))
 		else:
@@ -326,6 +326,7 @@ class updateTarea(UpdateView):
 	def post(self, request, *args, **kwargs):
 		self.object = self.get_object
 		pk1=self.kwargs['pk']
+		curso=self.kwargs['curso']
 		form = self.form_class(request.POST, instance=self.model.objects.get(id=pk1))
 		if form.is_valid():
 			form1 = form.save(commit=False)
@@ -333,12 +334,12 @@ class updateTarea(UpdateView):
 			materia.save()
 			form1.save()
 			form.save_m2m()
-			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': self.get_object().tema.pk}))
+			return HttpResponseRedirect(reverse_lazy(self.success_url, kwargs = {'pk': self.get_object().tema.pk, 'curso': curso}))
 		else:
 			return self.render_to_response(self.get_context_data(form=form))
 
 	def get_success_url(self):
-		return reverse_lazy(self.success_url, kwargs = {'pk': self.get_object().tema.pk})
+		return reverse_lazy(self.success_url, kwargs = {'pk': self.get_object().tema.pk, 'curso': curso})
 
 class listaTareaE(ListView):
 	model = Tarea
@@ -387,7 +388,7 @@ class listaTareasEntregadas(ListView):
 		context = super().get_context_data(**kwargs)
 		pk1 = self.kwargs['pk']
 		context['tarea'] = Tarea.objects.get(id=pk1)
-		context['a_tiempo'] = Tarea.objects.get(id=pk1).fecha_plazo > datetime.datetime.now()
+		context['a_tiempo'] = Tarea.objects.get(id=pk1).fecha_plazo > timezone.now()
 		return context
 
 	def get_queryset(self):
@@ -402,8 +403,8 @@ class detalleTarea(DetailView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		pk1 = self.kwargs['pk']
-		context['a_tiempo'] = self.model.objects.get(id=pk1).fecha_plazo > datetime.datetime.now()
-		context['en_retraso'] = self.model.objects.get(id=pk1).fecha_plazo < datetime.datetime.now()
+		context['a_tiempo'] = self.model.objects.get(id=pk1).fecha_plazo > timezone.now()
+		context['en_retraso'] = self.model.objects.get(id=pk1).fecha_plazo < timezone.now()
 		context['tarea_e'] = self.second_model.objects.get(tarea=pk1, estudiante=self.request.user.id)
 
 		return context
