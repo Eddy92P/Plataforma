@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['key']
+SECRET_KEY = 'ccn0i7hiwmiwvd)m)&yql4m%zpfdtff91#nnu*mti*y1hl-7zw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -93,8 +93,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
          'NAME': 'plataforma',
-         'USER': os.getenv('db_name'),
-         'PASSWORD': os.getenv('db_pass'),
+         'USER': 'eddy',
+         'PASSWORD': 'vetealaversh2468',
     }
 }
 
@@ -180,8 +180,8 @@ AUTH_USER_MODEL = "comunidad.User"
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 25
-EMAIL_HOST_USER = os.getenv('mail_user')
-EMAIL_HOST_PASSWORD = os.getenv('mail_pass')
+EMAIL_HOST_USER = 'ueducativa.maria.auxiliadora@gmail.com'
+EMAIL_HOST_PASSWORD = 'uemauxiliadora2020'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 #Sesiones
