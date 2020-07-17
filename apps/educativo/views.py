@@ -210,7 +210,7 @@ class listaTemaD(ListView):
 
 	def get_queryset(self):
 		pk1 = self.kwargs['pk']
-		return self.model.objects.filter(curso=pk1)
+		return self.model.objects.filter(materia__in=Materia.objects.filter(docente=self.request.user.id), curso=pk1)
 
 """class crearTareaEstudiante(CreateView):
 	form_class = crearTareaEstudianteForm
