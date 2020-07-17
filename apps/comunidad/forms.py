@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import User
+from django.core.validators import RegexValidator
 
 from django.urls import reverse
 

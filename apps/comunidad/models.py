@@ -22,7 +22,19 @@ class User(AbstractUser):
 		(4, 'estudiante'),
 		(5, 'administrador')
 	)
-	
+	email = models.CharField(
+		max_length=70,
+		null=False,
+		blank=False,
+		unique=True,
+		validators=[
+			RegexValidator(
+				regex=r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$',
+				message='No es un correo válido',
+				code='Numero Invalido'
+				)
+			]
+		)
 	tipo_usuario = models.PositiveSmallIntegerField(choices=CHOICES, default=5)
 
 class Administrativo(models.Model):
@@ -343,7 +355,6 @@ class Estudiante(models.Model):
 	telefono_celular = models.CharField(
 		max_length = 8,
 		blank=True,
-		unique=True,
 		validators=[
 			RegexValidator(
 				regex=r'^[0-9]{8}$',

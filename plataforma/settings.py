@@ -93,8 +93,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
          'NAME': 'plataforma',
-         'USER': 'eddy',
-         'PASSWORD': 'vetealaversh2468',
+         'USER': 'root',
+         'PASSWORD': '',
     }
 }
 
@@ -187,6 +187,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #Sesiones
 SESSION_COOKIE_AGE = 1800
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-if DEBUG == False:
-    SESSION_COOKIE_SECURE = True
 SESSION_SAVE_EVERY_REQUEST = True
