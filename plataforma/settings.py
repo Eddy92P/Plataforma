@@ -26,7 +26,7 @@ SECRET_KEY = 'ccn0i7hiwmiwvd)m)&yql4m%zpfdtff91#nnu*mti*y1hl-7zw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-if DEBUG == True:
+if DEBUG:
     ALLOWED_HOSTS = ['127.0.0.1']
 else:
     ALLOWED_HOSTS = ['ueducativamariaauxiliadora.com', 'www.ueducativamariaauxiliadora.com']
@@ -89,14 +89,24 @@ WSGI_APPLICATION = 'plataforma.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-         'NAME': 'plataforma',
-         'USER': 'eddy',
-         'PASSWORD': 'vetealaversh2468',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'plataforma',
+            'USER': 'root',
+            'PASSWORD': '',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'plataforma',
+            'USER': 'eddy',
+            'PASSWORD': 'vetealaversh2468',
+        }
+    }
 
 
 # Password validation

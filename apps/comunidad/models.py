@@ -38,7 +38,6 @@ class User(AbstractUser):
 		max_length=70,
 		null=False,
 		blank=False,
-		unique=True,
 		validators=[
 			RegexValidator(
 				regex=r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$',
@@ -358,8 +357,8 @@ class Estudiante(models.Model):
 		unique=True,
 		validators=[
 			RegexValidator(
-				regex=r'[0-9]{15,16}$',
-				message='RUDE tiene un máximo de 16 dígitos y debe contener sólo números.',
+				regex=r'[0-9]{14,16}[a-zA-Z]{0,1}',
+				message='RUDE tiene un máximo de 16 dígitos, debe contener sólo números y en algunos casos una letra más.',
 				code='Numero Invalido'
 				)
 			]
