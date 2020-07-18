@@ -22,6 +22,18 @@ class User(AbstractUser):
 		(4, 'estudiante'),
 		(5, 'administrador')
 	)
+	first_name = models.CharField(
+		max_length=100,
+		null=False,
+		blank=False,
+		validators=[
+			RegexValidator(
+				regex=r'^[a-zA-ZñÑáéíóúÁÉÍÓÚ]',
+				message='El campo sólo permite letras',
+				code='Numero Invalido'
+				)
+			]
+		)
 	email = models.CharField(
 		max_length=70,
 		null=False,
