@@ -27,7 +27,7 @@ SECRET_KEY = 'ccn0i7hiwmiwvd)m)&yql4m%zpfdtff91#nnu*mti*y1hl-7zw'
 DEBUG = False
 
 if DEBUG:
-    ALLOWED_HOSTS = ['127.0.0.1']
+    ALLOWED_HOSTS = ['*']
 else:
     ALLOWED_HOSTS = ['ueducativamariaauxiliadora.com', 'www.ueducativamariaauxiliadora.com']
 

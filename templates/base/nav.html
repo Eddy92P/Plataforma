@@ -29,7 +29,7 @@
 				</li>
 			{% endif %}
 
-			{% if perms.comunidad.view_administrativo %}
+			{% if request.user.tipo_usuario == 1 %}
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-chalkboard"></i> Educativo</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
