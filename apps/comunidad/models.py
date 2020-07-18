@@ -341,7 +341,6 @@ class Estudiante(models.Model):
 	ci = models.CharField(
 		max_length=9,
 		blank=True,
-		unique=True,
 		validators=[
 			RegexValidator(
 				regex=r'[0-9]{7}[a-zA-Z]{0,2}',
