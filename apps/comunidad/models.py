@@ -34,6 +34,19 @@ class User(AbstractUser):
 				)
 			]
 		)
+	ci = models.CharField(
+		max_length=9,
+		null=False,
+		blank=False,
+		unique=True,
+		validators=[
+			RegexValidator(
+				regex=r'[0-9]{7}[a-zA-Z]{0,2}',
+				message='El CI Tiene un máximo de 7 digitos y en algunos casos dos letras mas',
+				code='Numero Invalido'
+				)
+			]
+		)
 	email = models.CharField(
 		max_length=70,
 		null=False,
@@ -50,19 +63,6 @@ class User(AbstractUser):
 
 class Administrativo(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name='administrativo')
-	ci = models.CharField(
-		max_length=9,
-		null=False,
-		blank=False,
-		unique=True,
-		validators=[
-			RegexValidator(
-				regex=r'[0-9]{7}[a-zA-Z]{0,2}',
-				message='El CI Tiene un máximo de 7 digitos y en algunos casos dos letras mas',
-				code='Numero Invalido'
-				)
-			]
-		)
 	telefono_celular = models.CharField(
 		max_length = 8,
 		null=False,
@@ -153,19 +153,6 @@ class Administrativo(models.Model):
 
 class Docente(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name='docente')
-	ci = models.CharField(
-		max_length=9,
-		null=False,
-		blank=False,
-		unique=True,
-		validators=[
-			RegexValidator(
-				regex=r'[0-9]{7}[a-zA-Z]{0,2}',
-				message='El CI Tiene un máximo de 7 digitos y en algunos casos dos letras mas',
-				code='Numero Invalido'
-				)
-			]
-		)
 	telefono_celular = models.CharField(
 		max_length = 8,
 		null=False,
@@ -237,19 +224,6 @@ class Docente(models.Model):
 
 class Padre(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name='padre')
-	ci = models.CharField(
-		max_length=9,
-		null=False,
-		blank=False,
-		unique=True,
-		validators=[
-			RegexValidator(
-				regex=r'[0-9]{7}[a-zA-Z]{0,2}',
-				message='El CI Tiene un máximo de 7 digitos y en algunos casos dos letras mas',
-				code='Numero Invalido'
-				)
-			]
-		)
 	telefono_celular = models.CharField(
 		max_length = 8,
 		null=False,
@@ -338,17 +312,6 @@ class Padre(models.Model):
 
 class Estudiante(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name='estudiante')
-	ci = models.CharField(
-		max_length=9,
-		blank=True,
-		validators=[
-			RegexValidator(
-				regex=r'[0-9]{7}[a-zA-Z]{0,2}',
-				message='El CI Tiene un máximo de 7 digitos y en algunos casos dos letras mas',
-				code='Numero Invalido'
-				)
-			]
-		)
 	rude = models.CharField(
 		max_length=16,
 		null=False,
