@@ -155,7 +155,7 @@ LOGGING = {
 
 LANGUAGE_CODE = 'es-la'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/La_Paz'
 
 USE_I18N = True
 
