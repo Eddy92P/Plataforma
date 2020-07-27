@@ -47,13 +47,13 @@
 								{% if perms.comunidad.view_docente %}
 									{% if a_tiempo and obj.entregado and not obj.revisado %}
 										<div class="btn-group" role="group">
-											<a href="{% url 'educativo:recepciontarea' obj.id %}" type="button" class="btn btn-success btn-sm" title="Detalles">
+											<a href="{% url 'educativo:recepciontarea' obj.id %}" type="button" class="btn btn-success btn-sm" title="Recibir tarea">
 												<i class="fas fa-check-square"></i> Recibir tarea
 											</a>     
 										</div>
 									{% elif obj.entregado and not obj.revisado %}
 										<div class="btn-group" role="group">
-											<a href="{% url 'educativo:recepciontarea' obj.id %}" type="button" class="btn btn-success btn-sm" title="Detalles">
+											<a href="{% url 'educativo:recepciontarea' obj.id %}" type="button" class="btn btn-success btn-sm" title="Notificar tarea">
 												<i class="fas fa-check-square"></i> Notificar tarea
 											</a>     
 										</div>

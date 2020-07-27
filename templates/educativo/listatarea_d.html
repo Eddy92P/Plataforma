@@ -8,7 +8,7 @@
             <a href="{% url 'educativo:nuevatarea' pk1 curso %}" type="button" class="btn btn-primary btn-sm float-right" title="Agregar tarea"><i class="fas fa-plus-circle"></i> Agregar</a>
          {% endif %}
       </div>
-      <table class="table table-borderless table-hover table-striped table-responsive-lg" id="lista_tabla">
+      <table class="table table-borderless table-hover table-striped table-responsive" id="lista_tabla">
          <thead>
             <tr>
                <th scope="col">#</th>
@@ -16,6 +16,7 @@
                <th scope="col">Fecha de subida</th>
                <th scope="col">Fecha plazo</th>
                <th scope="col">Trabajo</th>
+               <th style="text-align: center;" width="250" scope="col">Enlace</th>
                <th scope="col">Opciones</th>
             </tr>
          </thead>
@@ -27,7 +28,18 @@
                   <td>{{ obj.nombre }}</td>
                   <td>{{ obj.fecha_habilitado }}</td>
                   <td>{{ obj.fecha_plazo }}</td>
-                  <td><a href="{{ obj.trabajo.url }}">{{ obj.filename }}</a></td>
+                  <td>
+                     {% if obj.trabajo %}
+                        <a href="{{ obj.trabajo.url }}">{{ obj.filename }}</a>
+                     {% endif %}
+                  </td>
+                  <td style="text-align: center;" width="250">
+                  {% if obj.enlace != '' %}
+                     <a href="{{ obj.enlace }}" target="_blank">
+                        <img style="max-width: 15%;" title="Enlace Google Drive" src="/static/fotos/google-drive.png"></img>
+                     </a>
+                  {% endif %}
+                  </td>
                   <td>
                      {% if perms.comunidad.view_docente %}
                         {% if request.user.tipo_usuario == 2 %}
@@ -38,7 +50,7 @@
                            </div>
                         {% endif %}
                         <div class="btn-group" role="group">
-                           <a href="{% url 'educativo:listatareas_entregadas' obj.id %}" type="button" class="btn btn-info btn-sm" title="Editar">
+                           <a href="{% url 'educativo:listatareas_entregadas' obj.id %}" type="button" class="btn btn-info btn-sm" title="Tareas estudiantes">
                               <i class="fa fa-file-alt"></i> Tareas estudiantes
                            </a>
                         </div>

@@ -3,12 +3,13 @@
 <div class="container bootstrap snippet" style="padding-top: 3%">
    <div class="card border-dark" style="padding-bottom: 10px;">
       <div class="card-header text-white text-center">Tema "{{ tema }}" - Tareas</div>
-      <table class="table table-borderless table-hover table-striped" id="lista_tabla">
+      <table class="table table-borderless table-hover table-striped table-responsive" id="lista_tabla">
          <thead>
             <tr>
                <th scope="col">#</th>
                <th scope="col">Nombre de la tarea</th>
                <th style="text-align: center;" scope="col" width="250">Guía para descargar</th>
+               <th style="text-align: center;" width="250" scope="col">Enlace para descargar</th>
                <th scope="col">Opciones</th>
             </tr>
          </thead>
@@ -19,14 +20,23 @@
                   <th scope="row">{{ obj.num_tarea }}</th>
                   <td>{{ obj.nombre }}</td>
                   <td style="text-align: center;" width="250">
+                  {% if obj.trabajo %}
                      <a href="{{ obj.trabajo.url }}" download="">
                         <img style="max-width: 15%;" title="Descargar" src="/static/fotos/pdf.png"></img>
                      </a>
+                  {% endif %}
+                  </td>
+                  <td style="text-align: center;" width="250">
+                  {% if obj.enlace != '' %}
+                     <a href="{{ obj.enlace }}" target="_blank">
+                        <img style="max-width: 15%;" title="Enlace Google Drive" src="/static/fotos/google-drive.png"></img>
+                     </a>
+                  {% endif %}
                   </td>
                   <td>
                      {% if perms.comunidad.view_estudiante %}
                         <div class="btn-group" role="group">
-                           <a href="{% url 'educativo:detalletarea' obj.id %}" type="button" class="btn btn-info btn-sm" title="Detalles">
+                           <a href="{% url 'educativo:detalletarea' obj.id %}" type="button" class="btn btn-info btn-sm" title="Detalle tarea">
                               <i class="fa fa-list-alt"></i> Entregar tarea
                            </a>     
                         </div>

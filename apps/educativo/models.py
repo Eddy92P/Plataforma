@@ -16,7 +16,7 @@ from django.utils import timezone
 
 def validate_file_extension(value):
 	ext = os.path.splitext(value.name)[1]
-	valid_extensions = ['.pdf','.doc','.docx', '.png', '.gif', '.jpg']
+	valid_extensions = ['.pdf','.doc','.docx', '.png', '.gif', '.jpg', '.rar']
 	if not ext in valid_extensions:
 		raise ValidationError(u'Tipo de archivo no soportado')
 
@@ -28,15 +28,15 @@ def validate_image_extension(value):
 
 def validate_file_size_e(value):
 	file_size = value.file.size
-	limit_kb = 3000
+	limit_kb = 5000
 	if file_size > limit_kb*1024:
-		raise ValidationError(u"El tamaño máximo permitido es de 3MB")
+		raise ValidationError(u"El tamaño máximo permitido es de 5MB")
 
 def validate_file_size_d(value):
 	file_size = value.file.size
-	limit_kb = 3000
+	limit_kb = 5000
 	if file_size > limit_kb*1024:
-		raise ValidationError(u"El tamaño máximo permitido es de 3MB")
+		raise ValidationError(u"El tamaño máximo permitido es de 5MB")
 
 def validate_file_size_d_m(value):
 	file_size = value.file.size
@@ -218,11 +218,11 @@ class Tarea_estudiante(models.Model):
 	estudiante = models.ForeignKey('comunidad.Estudiante', on_delete=models.PROTECT)
 	tarea = models.ForeignKey('Tarea', on_delete=models.PROTECT)
 	trabajo = models.FileField(
-		null=False,
-		blank=False,
+		null=True,
+		blank=True,
 		upload_to='tareas_estudiantes/',
 		validators=[validate_file_extension, validate_file_size_e],
-		help_text = "Los fomatos permitidos son .pdf, .doc, .docx, .jpg, .gif, .jpg y debe tener un tamaño máximo de 3MB"
+		help_text = "Los fomatos permitidos son .pdf, .doc, .docx, .jpg, .gif, .jpg y debe tener un tamaño máximo de 5MB"
 		)
 	fecha_entrega = models.DateTimeField(
 		auto_now_add = False,
@@ -290,12 +290,17 @@ class Tarea(models.Model):
 	fecha_habilitado = models.DateField(
 		auto_now_add=True
 		)
+	enlace = models.CharField(
+		max_length=500,
+		blank=True,
+		help_text="Aquí puede ingresar el enlace de su Google Drive, en caso de tener un archivo demasiado grande."
+		)
 	trabajo = models.FileField(
-		null=False,
-		blank=False,
+		null=True,
+		blank=True,
 		upload_to='tareas_docentes/',
 		validators=[validate_file_extension, validate_file_size_d],
-		help_text = "Los fomatos permitidos son .pdf, .doc, .docx, .png, .jpg, .gif y debe tener un tamaño máximo de 3MB"
+		help_text = "Los fomatos permitidos son .pdf, .doc, .docx, .png, .jpg, .gif, .rar y debe tener un tamaño máximo de 5MB"
 		)
 
 	def __str__(self):
@@ -312,12 +317,17 @@ class Material(models.Model):
 		null=False,
 		blank=False
 		)
+	enlace = models.CharField(
+		max_length=500,
+		blank=True,
+		help_text="Aquí puede ingresar el enlace de su Google Drive, en caso de tener un archivo demasiado grande."
+		)
 	trabajo = models.FileField(
 		null=False,
 		blank=False,
 		upload_to='material_docentes/',
 		validators=[validate_file_extension, validate_file_size_d_m],
-		help_text = "Los fomatos permitidos son .pdf, .doc, .docx y debe tener un tamaño máximo de 7MB"
+		help_text = "Los fomatos permitidos son .pdf, .doc, .docx, .png, .jpg, .gif, .rar y debe tener un tamaño máximo de 7MB"
 		)
 	fecha = models.DateField(
 		auto_now_add=True,
