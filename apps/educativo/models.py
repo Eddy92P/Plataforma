@@ -282,6 +282,10 @@ class Tarea(models.Model):
 		null=False,
 		blank=False
 		)
+	descripcion = models.TextField(
+		blank=True,
+		help_text='Puede agregar una descripción de la tarea en este recuadro.'
+		)
 	fecha_plazo = models.DateTimeField(
 		null=False,
 		blank = False,

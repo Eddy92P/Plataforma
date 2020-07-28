@@ -327,7 +327,7 @@ class updateTarea(UpdateView):
 		self.object = self.get_object
 		pk1=self.kwargs['pk']
 		curso=self.kwargs['curso']
-		form = self.form_class(request.POST, instance=self.model.objects.get(id=pk1))
+		form = self.form_class(request.POST, request.FILES, instance=self.model.objects.get(id=pk1))
 		if form.is_valid():
 			form1 = form.save(commit=False)
 			materia = Materia.objects.get(id=self.model.objects.get(id=pk1).tema.materia_id)
@@ -440,7 +440,7 @@ class updateMaterial(UpdateView):
 	def post(self, request, *args, **kwargs):
 		self.object = self.get_object
 		pk1=self.kwargs['pk']
-		form = self.form_class(request.POST, instance=self.model.objects.get(id=pk1))
+		form = self.form_class(request.POST, request.FILES, instance=self.model.objects.get(id=pk1))
 		if form.is_valid():
 			form1 = form.save(commit=False)
 			materia = Materia.objects.get(id=self.model.objects.get(id=pk1).tema.materia_id)
