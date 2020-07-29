@@ -111,7 +111,7 @@ class Materia(models.Model):
 		return qs1 & qs2
 
 	def actualizacion_materia(self):
-		diferencia_fechas = timezone.now() - self.actualizacion
+		diferencia_fechas = timezone.localtime(timezone.now()) - self.actualizacion
 		duration_in_s = diferencia_fechas.total_seconds()
 		days = divmod(duration_in_s, 86400)
 		hours = divmod(days[1], 3600)
@@ -237,7 +237,7 @@ class Tarea_estudiante(models.Model):
 		)
 
 	def lapso_retraso(self):
-		diferencia_fechas = timezone.now() - self.tarea.fecha_plazo
+		diferencia_fechas = timezone.localtime(timezone.now()) - self.tarea.fecha_plazo
 		duration_in_s = diferencia_fechas.total_seconds()
 		days = divmod(duration_in_s, 86400)
 		hours = divmod(days[1], 3600)
