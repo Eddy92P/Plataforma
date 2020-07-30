@@ -41,7 +41,11 @@
 					</tr>
 					<tr>
 						<th scope="row">Trabajo</th>
-						<td>{{ tarea_e.filename }}</td>
+						<td>
+							{% if tarea_e.trabajo %}
+								<a href="{{ tarea_e.trabajo.url }}">{{ tarea_e.filename }}</a>
+							{% endif %}
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">Observaciones</th>
