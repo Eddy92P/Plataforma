@@ -1,4 +1,5 @@
-{% extends "base/index.html" %}	
+{% extends "base/index.html" %}
+{% load custom_tags %}	
 {% block body %}
 <div class="container bootstrap snippet" style="padding-top: 3%">
    <div class="card border-dark" style="padding-bottom: 10px;">
@@ -35,7 +36,8 @@
                   {% endif %}
                   </td>
                   <td>
-                     {% if obj.tarea_estudiante.entregado %}
+                     {% t_estudiante obj request_user as tarea_estudiante %}
+                     {% if tarea_estudiante.entregado %}
                         <span>Entregado</span>
                      {% else %}
                         <span style="color: red;">No entregado</span>

@@ -305,8 +305,8 @@ class Tarea(models.Model):
 	def __str__(self):
 		return self.nombre
 
-	def tarea_estudiante(self):
-		return Tarea_estudiante.objects.get(tarea=self.id)
+	def tarea_estudiante(self, request):
+		return Tarea_estudiante.objects.get(tarea=self.id, estudiante_id=request)
 
 	def filename(self):
 		return os.path.basename(self.trabajo.name)

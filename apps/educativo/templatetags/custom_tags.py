@@ -14,3 +14,7 @@ def tarea(Materia, f1, f2):
 @register.simple_tag
 def doc_encargado(Materia, curso_id):	
 	return Materia.docente_encargado(curso_id)
+
+@register.simple_tag
+def t_estudiante(Tarea, request):	
+	return Tarea.tarea_estudiante(request)

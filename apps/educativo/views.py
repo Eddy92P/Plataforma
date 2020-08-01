@@ -349,6 +349,7 @@ class listaTareaE(ListView):
 		context = super().get_context_data(**kwargs)
 		pk1 = self.kwargs['pk']
 		context['tema'] = Tema.objects.get(id=pk1)
+		context['request_user'] = self.request.user.id
 		context['pk1'] = pk1
 		return context
 
