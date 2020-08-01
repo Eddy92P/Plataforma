@@ -3,13 +3,14 @@
 <div class="container bootstrap snippet" style="padding-top: 3%">
    <div class="card border-dark" style="padding-bottom: 10px;">
       <div class="card-header text-white text-center">Tema "{{ tema }}" - Tareas</div>
-      <table class="table table-borderless table-hover table-striped table-responsive" id="lista_tabla">
+      <table class="table table-borderless table-hover table-striped table-responsive-md" id="lista_tabla">
          <thead>
             <tr>
                <th scope="col">#</th>
                <th scope="col">Nombre de la tarea</th>
                <th style="text-align: center;" scope="col" width="250">Guía para descargar</th>
                <th style="text-align: center;" width="250" scope="col">Enlace para descargar</th>
+               <th scope="col">Estado</th>
                <th scope="col">Opciones</th>
             </tr>
          </thead>
@@ -32,6 +33,13 @@
                         <img style="max-width: 15%;" title="Enlace Google Drive" src="/static/fotos/google-drive.png"></img>
                      </a>
                   {% endif %}
+                  </td>
+                  <td>
+                     {% if obj.tarea_estudiante.entregado %}
+                        <span>Entregado</span>
+                     {% else %}
+                        <span style="color: red;">No entregado</span>
+                     {% endif %}
                   </td>
                   <td>
                      {% if perms.comunidad.view_estudiante %}

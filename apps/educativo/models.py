@@ -78,7 +78,7 @@ class Materia(models.Model):
 		help_text="Ingrese el nombre de la materia, como por ejemplo, matemáticas, literatura.",
 		validators=[
 			RegexValidator(
-				regex=r'^[a-zA-ZñÑáéíóúÁÉÍÓÚ]{5,}',
+				regex=r'[a-zA-ZñÑáéíóúÁÉÍÓÚ]{5,}',
 				message='El campo sólo permite letras y un mínimo de 5 caracteres',
 				code='Numero Invalido'
 				)
@@ -144,13 +144,6 @@ class Actividad(models.Model):
 		null=False,
 		blank=False,
 		help_text="Nombre de la actividad",
-		validators=[
-			RegexValidator(
-				regex=r'^[a-zA-ZñÑáéíóúÁÉÍÓÚ]',
-				message='El campo sólo permite letras',
-				code='Numero Invalido'
-				)
-			]
 		)
 	ubicacion = models.CharField(
 		max_length = 40,
@@ -265,7 +258,9 @@ class Tarea_estudiante(models.Model):
 		return os.path.basename(self.trabajo.name)
 
 	def fecha_entrega_corta(self):
-		return self.fecha_entrega.strftime("%d-%m-%y a las %H:%M")
+		from pytz import timezone
+		bolivia = timezone('America/La_Paz')
+		return self.fecha_entrega.astimezone(bolivia).strftime("%d-%m-%y a las %H:%M")
 
 class Tarea(models.Model):
 	tema = models.ForeignKey(Tema, on_delete=models.CASCADE)
@@ -309,6 +304,9 @@ class Tarea(models.Model):
 
 	def __str__(self):
 		return self.nombre
+
+	def tarea_estudiante(self):
+		return Tarea_estudiante.objects.get(tarea=self.id)
 
 	def filename(self):
 		return os.path.basename(self.trabajo.name)
